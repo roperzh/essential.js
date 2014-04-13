@@ -1,0 +1,24 @@
+{
+  "name": "essential",
+  "version": "0.1.0",
+  "description": "TODO: write a good description here",
+  "main": "essential.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "phantomjs": "~1.9.2",
+    "docco": "~0.6.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roperzh/essential.js.git"
+  },
+  "keywords": [
+  ],
+  "author": "Roberto Dip",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roperzh/essential.js/issues"
+  }
+}
