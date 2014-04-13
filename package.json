@@ -8,14 +8,19 @@
   },
   "devDependencies": {
     "docco": "~0.6.3",
-    "mocha": "~1.18.2"
+    "karma": "~0.12.6",
+    "karma-mocha": "~0.1.3",
+    "karma-chai": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-opera-launcher": "~0.1.0"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/roperzh/essential.js.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Roberto Dip",
   "license": "MIT",
   "bugs": {
