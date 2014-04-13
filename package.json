@@ -14,7 +14,8 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-firefox-launcher": "~0.1.3",
     "karma-chrome-launcher": "~0.1.3",
-    "karma-opera-launcher": "~0.1.0"
+    "karma-opera-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0"
   },
   "repository": {
     "type": "git",

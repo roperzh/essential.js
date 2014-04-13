@@ -17,7 +17,8 @@ module.exports = function(config) {
     files: [
       '../lib/*.js',
       '../src/*.js',
-      './*_test.js'
+      './*_test.js',
+      'fixtures/*.html'
     ],
 
 
@@ -27,7 +28,9 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {},
+    preprocessors: {
+      '**/*.html': ['html2js']
+    },
 
 
     // test results reporter to use
@@ -60,6 +63,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };
