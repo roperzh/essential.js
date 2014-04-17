@@ -1,0 +1,24 @@
+{
+  "tags"      : {
+    "allowUnknownTags" : true
+  },
+  "plugins"   : ["plugins/markdown"],
+  "templates" : {
+    "cleverLinks"     : false,
+    "monospaceLinks"  : false,
+    "default"         : {
+      "outputSourceFiles" : true
+    },
+    "systemName"      : "Essential",
+    "footer"          : "",
+    "copyright"       : "",
+    "navType"         : "vertical",
+    "theme"           : "spacelab",
+    "linenums"        : true,
+    "collapseSymbols" : false
+  },
+  "markdown"  : {
+    "parser"   : "gfm",
+    "hardwrap" : true
+  }
+}
