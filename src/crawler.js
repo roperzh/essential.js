@@ -12,8 +12,14 @@ Essential.Core.crawler = function () {
     result = {};
 
   while (all[++i]) {
-    var current = all[i];
-    result[current.getAttribute("data-behavior") || current.getAttribute("behavior")] = current;
+    var currentElement = all[i],
+      rawBehaviors = currentElement.getAttribute("data-behavior") || currentElement.getAttribute("behavior"),
+      behaviorsList = rawBehaviors.split(" "),
+      j = -1;
+
+    while (behaviorsList[++j]) {
+      result[behaviorsList[j]] = currentElement;
+    }
   }
 
   return result;
