@@ -45,7 +45,7 @@ module.exports = function (config) {
     sauceLabs: {
       testName: 'Essential.js test suite'
     },
-    captureTimeout: 50000,
+    captureTimeout: 120000,
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers),
     singleRun: true
