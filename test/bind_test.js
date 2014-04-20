@@ -2,7 +2,7 @@ describe("Essential.Core#bind", function () {
   describe("given a NodeList", function () {
 
     beforeEach(function () {
-      document.body.innerHTML = __html__["fixtures/basic_structure.html"];
+      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
       this.nodeList = document.querySelectorAll("[data-behavior]");
 
       // This way of create events are deprecated, see

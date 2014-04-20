@@ -2,7 +2,7 @@ describe("Essential#crawler", function() {
   describe("given six associated behaviors in the DOM", function() {
 
     beforeEach(function() {
-      document.body.innerHTML = __html__["fixtures/basic_structure.html"];
+      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
       this.crawledContent = Essential.Core.crawler();
     });
 
