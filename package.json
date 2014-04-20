@@ -18,7 +18,8 @@
     "karma-html2js-preprocessor": "~0.1.0",
     "jsdoc": "~3.2.2",
     "ink-docstrap": "~0.3.0-0",
-    "karma-coverage": "~0.2.1"
+    "karma-coverage": "~0.2.1",
+    "karma-sauce-launcher": "~0.2.7"
   },
   "repository": {
     "type": "git",
