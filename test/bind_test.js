@@ -4,16 +4,29 @@ describe("Essential.Core#bind", function () {
     beforeEach(function () {
       document.body.innerHTML = __html__["fixtures/basic_structure.html"];
       this.nodeList = document.querySelectorAll("[data-behavior]");
-      this.clickEvent = new Event("click");
-      this.hoverEvent = new Event("hover");
+
+      // This way of create events are deprecated, see
+      // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent for more
+      // information, we are forced to this beacuse PhantomJS does not support
+      // event constructors
+
+      this.clickEvent = document.createEvent("Event")
+      this.clickEvent.initEvent('click', false, true);
+      this.hoverEvent = document.createEvent("Event")
+      this.hoverEvent.initEvent('hover', false, true);
       this.flag = 0;
-      this.changeFlag = function () { this.flag++; };
+
+      // Also I prefer Function.prototype.bind, instead of the _this trick,
+      // but we are tired with IE8 & PhantomJS
+
+      _this = this;
+      this.changeFlag = function () { _this.flag++; };
     });
 
     it("must bind a requested event on every node", function () {
       var i = -1;
 
-      Essential.Core.bind("hover", this.changeFlag.bind(this), this.nodeList);
+      Essential.Core.bind("hover", this.changeFlag, this.nodeList);
 
       while (this.nodeList[++i]) {
         this.nodeList[i].dispatchEvent(this.hoverEvent);
@@ -26,7 +39,7 @@ describe("Essential.Core#bind", function () {
     it("must bind only the requested event", function () {
       var i = -1;
 
-      Essential.Core.bind("hover", this.changeFlag.bind(this), this.nodeList);
+      Essential.Core.bind("hover", this.changeFlag, this.nodeList);
 
       while (this.nodeList[++i]) {
         this.nodeList[i].dispatchEvent(this.clickEvent);
