@@ -29,5 +29,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/roperzh/essential.js/issues"
+  },
+  "scripts": {
+    "test": "make test-ci"
   }
 }
