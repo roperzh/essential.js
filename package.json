@@ -19,7 +19,8 @@
     "jsdoc": "~3.2.2",
     "ink-docstrap": "~0.3.0-0",
     "karma-coverage": "~0.2.1",
-    "karma-sauce-launcher": "~0.2.7"
+    "karma-sauce-launcher": "~0.2.7",
+    "coveralls": "~2.10.0"
   },
   "repository": {
     "type": "git",

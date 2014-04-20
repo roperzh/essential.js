@@ -1,4 +1,5 @@
 language: node_js
+
 node_js:
 - '0.11'
 
@@ -6,3 +7,6 @@ env:
   global:
   - secure: "FePxZhCa9kD/waPSpsMX8SFsD3UgN8iPR1JZoYn9yV0Fyx8NZdQHlJFFmtlnWMmoc8j6r48M9BBNGhb6S6MqKSBsSe+E7YM+/wFO3wtqyZvuiRmOo9k6zi9Zew/cFbsNpyngBDUZHND/NfBQJsFWHp9ZeoP0HAsWmMElLpkU6s0="
   - secure: "dgiLI0hUMkd7qIhw4gZt4Z0qhQ1OmwGC2XGDV+b4K+TbrMK1KKJK3uWupdXLB9EDpp1ILCNK/IqYI+4zrZUkQRSHoF1yHc4qvSff6ZpCcK7H/LVdTpG0bgpZ0REgNMtYzSw6L9WmDnv4lNwsciDpnXD9Z0RIxBKgxQCrdhxd1gg="
+
+after_success:
+  - make && cat test/coverage/PhantomJS\ 1.9.7\ \(Linux\)/lcov.info | ./node_modules/coveralls/bin/coveralls.js
