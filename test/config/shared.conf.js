@@ -18,6 +18,7 @@ module.exports = function(config) {
       'lib/*.js',
       'src/main.js',
       'src/*.js',
+      'test/test_helper.js',
       'test/*_test.js',
       'test/fixtures/*.html'
     ],
