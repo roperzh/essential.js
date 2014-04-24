@@ -2,7 +2,7 @@ describe("Essential.Core#bind", function () {
   context("given a NodeList", function () {
 
     beforeEach(function () {
-      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
+      setDocumentContents("test/fixtures/basic_structure.html");
       this.nodeList = document.querySelectorAll("[data-behavior]");
 
       Helper.flag = 0;
@@ -28,7 +28,7 @@ describe("Essential.Core#bind", function () {
   context("given an Array of nodeElements", function () {
 
     beforeEach(function () {
-      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
+      setDocumentContents("test/fixtures/basic_structure.html");
       elements = document.getElementsByTagName("li");
       this.arrayOfElements = [elements[0], elements[1]];
       Helper.flag = 0;

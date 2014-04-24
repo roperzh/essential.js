@@ -2,7 +2,7 @@ describe("Essential.Core#crawler", function() {
   context("given six associated behaviors in the DOM", function() {
 
     beforeEach(function() {
-      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
+      setDocumentContents("test/fixtures/basic_structure.html");
       this.crawledContent = Essential.Core.crawler();
     });
 
@@ -27,7 +27,7 @@ describe("Essential.Core#crawler", function() {
   context("given no associated behaviors in the DOM", function() {
 
     it("must return an empty object", function() {
-      document.body.innerHTML = __html__["test/fixtures/page_without_behaviors.html"];
+      setDocumentContents("test/fixtures/page_without_behaviors.html");
       var crawledContent = Essential.Core.crawler();
 
       expect(crawledContent).to.be.an("Object");
