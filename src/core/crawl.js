@@ -6,7 +6,7 @@
 // Returns `Array<Object>` an array of objects containing the behavior name as
 // a key and the DOM node as a value
 
-Essential.Core.crawler = function () {
+Essential.Core.crawl = function () {
   var all = document.querySelectorAll("[data-behavior], [behavior]"),
     i = -1,
     result = {};

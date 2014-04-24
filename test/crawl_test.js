@@ -1,9 +1,9 @@
-describe("Essential.Core#crawler", function() {
+describe("Essential.Core#crawl", function() {
   context("given six associated behaviors in the DOM", function() {
 
     beforeEach(function() {
       setDocumentContents("test/fixtures/basic_structure.html");
-      this.crawledContent = Essential.Core.crawler();
+      this.crawledContent = Essential.Core.crawl();
     });
 
     it("must return an object with six keys", function() {
@@ -28,7 +28,7 @@ describe("Essential.Core#crawler", function() {
 
     it("must return an empty object", function() {
       setDocumentContents("test/fixtures/page_without_behaviors.html");
-      var crawledContent = Essential.Core.crawler();
+      var crawledContent = Essential.Core.crawl();
 
       expect(crawledContent).to.be.an("Object");
       expect(Object.keys(crawledContent).length).to.be.eql(0);
