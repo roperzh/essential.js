@@ -1,53 +1,46 @@
 describe("Essential.Behavior", function () {
-  describe("given a DOM element", function () {
+  context("given a DOM element", function () {
 
     beforeEach(function () {
-      document.body.innerHTML = __html__["test/fixtures/single_element.html"];
+      setDocumentContents("test/fixtures/single_element.html");
       this.domElement = document.getElementById("carousel");
+      this.behavior = customBehavior.new(this.domElement);
+      Helper.flag = 0;
     });
 
-    it("stores the DOM element on initialization", function () {
-      behavior = Essential.Behavior.new(this.domElement);
-      expect(behavior.el).to.be.eq(this.domElement);
+    it("stores the element in the `el` variable on initialization", function () {
+      expect(this.behavior.el).to.be.eq(this.domElement);
     });
 
-    describe("given a hash of events", function () {
+    context("given a hash of events", function () {
 
-      beforeEach(function () {
-        this.customBehavior = Essential.Behavior.extend({
-          events: {
-            "click": "clickHandler",
-            "click li": "customClickHandler",
-            "hover": "notDefinedEvent"
-          },
-          clickHandler: function () {
-           clickFlag = true;
-          },
-          customClickHandler: function() {
-            clustomClickFlag = true;
-          }
-        });
-
-        this.clickEvent = document.createEvent("Event")
-        this.clickEvent.initEvent('click', false, true);
+      it("delegates the events contained in the hash to `this.el` if no selector is present", function () {
+        this.domElement.dispatchEvent(Events.click());
+        expect(Helper.flag).to.not.equal(0);
       });
 
-      it("delegates the events contained in the hash to the domElement", function () {
-        behavior = this.customBehavior.new(this.domElement);
-        this.domElement.dispatchEvent(this.clickEvent);
-        expect(clickFlag).to.be.true;
+      it("delegates the events contained in the hash to an element inside `this.el` if a selector is present", function () {
+        var nestedElement = this.domElement.getElementsByTagName("li")[0];
+        nestedElement.dispatchEvent(Events.click());
+        expect(Helper.flag).to.not.equal(0);
       });
 
-      it("", function() {
-        behavior = this.customBehavior.new(this.domElement);
-        nestedElement = this.domElement.getElementsByTagName("li")[0];
-        nestedElement.dispatchEvent(this.clickEvent);
-        expect(clustomClickFlag).to.be.true;
+      it("only delegates events to elements contained by `this.el`", function () {
+        var menu = document.getElementById("menu");
+        var outsideElement = menu.getElementsByTagName("li")[0];
+        outsideElement.dispatchEvent(Events.click());
+        expect(Helper.flag).to.be.equal(0);
       });
 
-      it("pass off if a event is not defined", function() {
-        behavior = this.customBehavior.new(this.domElement);
-        expect(behavior).to.be.ok
+      it("pass off if an event in the hash is not defined", function () {
+        expect(this.behavior).to.be.ok;
+      });
+    });
+
+    context("without a hash of events", function() {
+      it("just ignores the existence of events", function() {
+        var behavior = Essential.Behavior.new(this.domElement);
+        expect(behavior).to.be.ok;
       });
     });
   });

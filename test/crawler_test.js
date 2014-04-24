@@ -1,8 +1,8 @@
-describe("Essential#crawler", function() {
-  describe("given six associated behaviors in the DOM", function() {
+describe("Essential.Core#crawler", function() {
+  context("given six associated behaviors in the DOM", function() {
 
     beforeEach(function() {
-      document.body.innerHTML = __html__["test/fixtures/basic_structure.html"];
+      setDocumentContents("test/fixtures/basic_structure.html");
       this.crawledContent = Essential.Core.crawler();
     });
 
@@ -11,7 +11,7 @@ describe("Essential#crawler", function() {
       expect(Object.keys(this.crawledContent).length).to.eql(6);
     });
 
-    it("must return an object with the names of the associated behaviors as a keys", function() {
+    it("every key of the object must have the name of the associated behavior", function() {
       expect(Object.keys(this.crawledContent)).to.eql(
         ["test", "test-inner", "multiple1", "multiple2", "test2", "test-inner2"]
       );
@@ -20,6 +20,18 @@ describe("Essential#crawler", function() {
     it("must allow multiple behaviors attached on the same element", function() {
       expect(Object.keys(this.crawledContent)).to.include("multiple1");
       expect(Object.keys(this.crawledContent)).to.include("multiple2");
+    });
+
+  });
+
+  context("given no associated behaviors in the DOM", function() {
+
+    it("must return an empty object", function() {
+      setDocumentContents("test/fixtures/page_without_behaviors.html");
+      var crawledContent = Essential.Core.crawler();
+
+      expect(crawledContent).to.be.an("Object");
+      expect(Object.keys(crawledContent).length).to.be.eql(0);
     });
   });
 });
