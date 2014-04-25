@@ -6,6 +6,9 @@ test:
 test-ci:
 	./node_modules/karma/bin/karma start test/config/ci.conf.js
 
+doc:
+	node_modules/.bin/jsdoc -t node_modules/ink-docstrap/template -c jsdoc.conf.json src/ -d doc
+
 build:
 	cat lib/proto.js src/{behavior,bind,camelize,crawler,main}.js > essential.js
 
