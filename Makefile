@@ -8,9 +8,10 @@ test-ci:
 	./node_modules/karma/bin/karma start test/config/ci.conf.js
 
 doc:
-	cat ${SOURCE_FILES} > docs/essential.js
-	./node_modules/docco/bin/docco docs/essential.js
-	rm -rf docs/essential.js
+	mkdir docs
+	cat ${SOURCE_FILES} > docs/index.js
+	./node_modules/docco/bin/docco docs/index.js
+	rm -rf docs/index.js
 
 build:
 	cat lib/proto.js ${SOURCE_FILES}  > essential.js
