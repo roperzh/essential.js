@@ -36,7 +36,10 @@ window.Essential = {
         name = this.Core.camelize(rawName),
         behavior = application[name];
 
-      if (typeof behavior === "undefined") continue;
+      if (typeof behavior === "undefined") {
+        continue;
+      };
+
       behavior.new(crawledContent[rawName]);
     }
   }

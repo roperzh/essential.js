@@ -30,7 +30,9 @@ Essential.Behavior = Proto.extend({
   },
 
   delegateEvents: function () {
-    if (typeof this.events === "undefined") return;
+    if (typeof this.events === "undefined") {
+      return;
+    };
 
     var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
@@ -42,7 +44,10 @@ Essential.Behavior = Proto.extend({
         selector = match[2],
         nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
 
-      if (typeof this[method] === "undefined") continue;
+      if (typeof this[method] === "undefined") {
+        continue;
+      };
+
       Essential.Core.bind(eventName, nodeList, this[method]);
     }
   }
