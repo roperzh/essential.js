@@ -1,7 +1,7 @@
 {
-  "name": "essential",
+  "name": "essential.js",
   "version": "0.1.0",
-  "description": "TODO: write a good description here",
+  "description": "Modular and lightweight JavaScript framework",
   "main": "essential.js",
   "directories": {
     "test": "test"
@@ -25,7 +25,12 @@
     "type": "git",
     "url": "git://github.com/roperzh/essential.js.git"
   },
-  "keywords": [],
+  "keywords": [
+    "essential",
+    "framework",
+    "behavior",
+    "behaviors"
+  ],
   "author": "Roberto Dip",
   "license": "MIT",
   "bugs": {
