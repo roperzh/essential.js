@@ -1,0 +1,27 @@
+{
+  "name": "essential.js",
+  "main": "essential.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/roperzh/essential.js",
+  "authors": [
+    "Roberto Dip <dip.jesusr@gmail.com>"
+  ],
+  "description": "Modular and lightweight JavaScript framework",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "essential",
+    "framework",
+    "behavior",
+    "behaviors"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
