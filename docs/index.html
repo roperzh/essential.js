@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>essential.js</title>
+  <title>index.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>essential.js</h1>
+                  <h1>index.js</h1>
               </div>
           </li>
         
@@ -34,6 +34,11 @@ http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
 </code></pre>
             </div>
             
+            <div class="content"><div class='highlight'><pre>
+window.Essential = {
+
+  Core: {},</pre></div></div>
+            
         </li>
         
         
@@ -43,11 +48,9 @@ http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p><strong>Essential</strong></p>
+              <h2 id="start">Start</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>window.Essential = {</pre></div></div>
             
         </li>
         
@@ -58,12 +61,37 @@ http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p><code>Essential.Core</code>
-holds the core methods and properties</p>
+              <p>Wakes up the engine, searching and attaching
+behaviors with their proper elements</p>
+<p>Param application[<code>Object</code>] an object containing
+behaviors names as a key and behaviors objects
+as a value</p>
+<p><strong>Example</strong></p>
+<pre><code class="lang-javascript">MyApp = {};
+MyApp.Carousel = Essential.Behaviors.extend();
+Essential.start(MyApp);
+<span class="hljs-comment">// will attach the carousel behavior to proper elements</span>
+</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  Core: {},</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+  start: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(application)</span> {</span>
+    <span class="hljs-keyword">var</span> crawledContent = <span class="hljs-keyword">this</span>.Core.crawl(),
+      rawBehaviorsNames = <span class="hljs-built_in">Object</span>.keys(crawledContent),
+      i = -<span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">while</span> (rawBehaviorsNames[++i]) {
+      <span class="hljs-keyword">var</span> rawName = rawBehaviorsNames[i],
+        name = <span class="hljs-keyword">this</span>.Core.camelize(rawName),
+        behavior = application[name];
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> behavior === <span class="hljs-string">"undefined"</span>) <span class="hljs-keyword">continue</span>;
+      behavior.new(crawledContent[rawName]);
+    }
+  }
+
+};</pre></div></div>
             
         </li>
         
@@ -74,14 +102,9 @@ holds the core methods and properties</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><code>Essential.Behaviors</code>
-holds the behaviors defined in the application</p>
+              <h2 id="behavior">Behavior</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>  Behaviors: {}
-
-};</pre></div></div>
             
         </li>
         
@@ -91,19 +114,6 @@ holds the behaviors defined in the application</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <h2 id="behavior">Behavior</h2>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Represents a behavior of some element or group of elements.
 The objetive is define a set of rules and events who
@@ -155,11 +165,11 @@ Essential.Behavior = Proto.extend({
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="bind">Bind</h2>
 
@@ -168,11 +178,11 @@ Essential.Behavior = Proto.extend({
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Binds an event to a node</p>
 <p>Param eventName[<code>String</code>] name of the event to be binded</p>
@@ -209,14 +219,26 @@ Essential.Core.bind = <span class="hljs-function"><span class="hljs-keyword">fun
         </li>
         
         
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="regexp-helpers">RegExp Helpers</h2>
+
+            </div>
+            
+        </li>
+        
+        
         <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <h2 id="regexp-helpers">RegExp Helpers</h2>
-
+              
             </div>
             
         </li>
@@ -227,18 +249,6 @@ Essential.Core.bind = <span class="hljs-function"><span class="hljs-keyword">fun
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Looks for some of this characters <code>:</code> <code>-</code> <code>_</code> the objetive is allow
 to define behaviors like <code>cool:carousel</code> or <code>small-carousel</code></p>
@@ -251,11 +261,11 @@ Essential.Core.SPECIAL_CHARS_REGEXP = <span class="hljs-regexp">/([\:\-\_]+(.))/
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Finds the first letter of a given string</p>
 
@@ -267,11 +277,11 @@ Essential.Core.FIRST_LETTER_REGEXP = <span class="hljs-regexp">/^[a-z]/g</span>;
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <h2 id="camelize">Camelize</h2>
 
@@ -280,11 +290,11 @@ Essential.Core.FIRST_LETTER_REGEXP = <span class="hljs-regexp">/^[a-z]/g</span>;
         </li>
         
         
-        <li id="section-14">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Converts strings to UpperCamelCase</p>
 <p>Param name[<code>String</code>] the name to be camelized</p>
@@ -311,11 +321,11 @@ Essential.Core.camelize = <span class="hljs-function"><span class="hljs-keyword"
         </li>
         
         
-        <li id="section-15">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <h2 id="crawl">Crawl</h2>
 
@@ -324,11 +334,11 @@ Essential.Core.camelize = <span class="hljs-function"><span class="hljs-keyword"
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Scans the DOM looking for behaviors</p>
 <p>Return <code>Array&lt;Object&gt;</code> an array of objects with the behavior name as
