@@ -32,7 +32,7 @@ Essential.Core.camelize = function (name) {
   replace(Essential.Core.FIRST_LETTER_REGEXP, function (letter) {
     return letter.toUpperCase();
   }).
-  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
+  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter) {
     return letter.toUpperCase();
   });
-}
+};

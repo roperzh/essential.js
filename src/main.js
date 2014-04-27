@@ -38,7 +38,7 @@ window.Essential = {
 
       if (typeof behavior === "undefined") {
         continue;
-      };
+      }
 
       behavior.new(crawledContent[rawName]);
     }
