@@ -1,14 +1,17 @@
-// Essential
-//----------
-// A basic object defined globally, who acts as a namespace or module
-// to hold the library
+//     EssentialJS v0.1.0
+//     Copyright (c)2014 Roberto Dip
+//     Distributed under MIT license
+//     http://roperzh.github.io/essential.js
 
+// **Essential**
 window.Essential = {
 
-  // Essential.Core holds all the methods related to the internal working
-  // of the plugin
+  // `Essential.Core`
+  // holds the core methods and properties
   Core: {},
 
-  // Essential.Behaviors holds all the behaviors to be loaded and executed
+  // `Essential.Behaviors`
+  // holds the behaviors defined in the application
   Behaviors: {}
+
 };

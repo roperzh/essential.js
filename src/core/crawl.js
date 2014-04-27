@@ -1,10 +1,22 @@
-// Crawler
-//--------
+// Crawl
+//------
 //
-// This function is in charge to scan the DOM looking for behaviors
+// Scans the DOM looking for behaviors
 //
-// Returns `Array<Object>` an array of objects containing the behavior name as
+// Return `Array<Object>` an array of objects with the behavior name as
 // a key and the DOM node as a value
+//
+// **Example**
+//
+// ```html
+// <div behavior="carousel"></div>
+// ```
+//
+// ```javascript
+// Essential.Core.crawl();
+//
+// // => [{ 'carousel': <HTMLDivElement> }]
+// ```
 
 Essential.Core.crawl = function () {
   var all = document.querySelectorAll("[data-behavior], [behavior]"),
