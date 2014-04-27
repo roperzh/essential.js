@@ -8,8 +8,8 @@ describe("Main initializer", function() {
       expect(Essential.Core).to.not.be.equal(undefined);
     });
 
-    it("must initialize the Behaviors namespace", function() {
-      expect(Essential.Behaviors).to.not.be.equal(undefined);
+    it("must define Essential#start", function() {
+      expect(Essential.start).to.not.be.equal(undefined);
     });
   });
 });
