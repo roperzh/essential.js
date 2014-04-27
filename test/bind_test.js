@@ -9,7 +9,7 @@ describe("Essential.Core#bind", function () {
     });
 
     it("must bind a given event on every node", function () {
-      Essential.Core.bind("hover", Helper.changeFlag, this.nodeList);
+      Essential.Core.bind("hover", this.nodeList, Helper.changeFlag);
 
       applyToAll(this.nodeList, "dispatchEvent", Events.hover());
 
@@ -17,7 +17,7 @@ describe("Essential.Core#bind", function () {
     });
 
     it("must bind only the requested event", function () {
-      Essential.Core.bind("hover", Helper.changeFlag, this.nodeList);
+      Essential.Core.bind("hover", this.nodeList, Helper.changeFlag);
 
       applyToAll(this.nodeList, "dispatchEvent", Events.click());
 
@@ -35,7 +35,7 @@ describe("Essential.Core#bind", function () {
     });
 
     it("must bind a given event on every node", function () {
-      Essential.Core.bind("hover", Helper.changeFlag, this.arrayOfElements);
+      Essential.Core.bind("hover", this.arrayOfElements, Helper.changeFlag);
 
       applyToAll(this.arrayOfElements, "dispatchEvent", Events.hover());
 
@@ -43,7 +43,7 @@ describe("Essential.Core#bind", function () {
     });
 
     it("must bind only the requested event", function () {
-      Essential.Core.bind("hover", Helper.changeFlag, this.arrayOfElements);
+      Essential.Core.bind("hover", this.arrayOfElements, Helper.changeFlag);
 
       applyToAll(this.arrayOfElements, "dispatchEvent", Events.click());
 

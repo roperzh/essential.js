@@ -43,7 +43,7 @@ Essential.Behavior = Proto.extend({
         nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
 
       if (typeof this[method] === "undefined") continue;
-      Essential.Core.bind(eventName, this[method], nodeList);
+      Essential.Core.bind(eventName, nodeList, this[method]);
     }
   }
 });
