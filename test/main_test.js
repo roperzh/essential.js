@@ -11,5 +11,9 @@ describe("Main initializer", function() {
     it("must define Essential#start", function() {
       expect(Essential.start).to.not.be.equal(undefined);
     });
+
+    it("must define document as a default rootElement", function() {
+      expect(Essential.rootElement).to.be.equal(document);
+    });
   });
 });

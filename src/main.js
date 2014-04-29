@@ -5,6 +5,8 @@
 
 window.Essential = {
 
+  rootElement: document,
+
   Core: {},
 
   // Start
