@@ -18,8 +18,8 @@
 // // => [{ 'carousel': <HTMLDivElement> }]
 // ```
 
-Essential.Core.crawl = function () {
-  var all = document.querySelectorAll("[data-behavior], [behavior]"),
+Essential.Core.crawl = function (rootElement) {
+  var all = rootElement.querySelectorAll("[data-behavior], [behavior]"),
     i = -1,
     result = {};
 

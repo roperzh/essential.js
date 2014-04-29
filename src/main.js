@@ -29,7 +29,7 @@ window.Essential = {
   // ```
 
   start: function (application) {
-    var crawledContent = this.Core.crawl(),
+    var crawledContent = this.Core.crawl(this.rootElement),
       rawBehaviorsNames = Object.keys(crawledContent),
       i = -1;
 

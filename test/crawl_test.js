@@ -1,9 +1,9 @@
 describe("Essential.Core#crawl", function() {
-  context("given six associated behaviors in the DOM", function() {
+  context("given six associated behaviors in the rootElement", function() {
 
     beforeEach(function() {
       setDocumentContents("test/fixtures/basic_structure.html");
-      this.crawledContent = Essential.Core.crawl();
+      this.crawledContent = Essential.Core.crawl(document);
     });
 
     it("must return an object with six keys", function() {
@@ -22,13 +22,21 @@ describe("Essential.Core#crawl", function() {
       expect(Object.keys(this.crawledContent)).to.include("multiple2");
     });
 
+    it("only search for behaviors contained in the rootElement", function() {
+      var rootElement = document.getElementsByTagName("section")[0],
+        crawledContent = Essential.Core.crawl(rootElement);
+
+      expect(Object.keys(crawledContent)).to.eql(
+        ["test-inner", "multiple1", "multiple2"]
+      );
+    });
   });
 
-  context("given no associated behaviors in the DOM", function() {
+  context("given no associated behaviors in the rootElement", function() {
 
     it("must return an empty object", function() {
       setDocumentContents("test/fixtures/page_without_behaviors.html");
-      var crawledContent = Essential.Core.crawl();
+      var crawledContent = Essential.Core.crawl(document);
 
       expect(crawledContent).to.be.an("Object");
       expect(Object.keys(crawledContent).length).to.be.eql(0);
