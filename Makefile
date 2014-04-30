@@ -9,9 +9,10 @@ test-ci:
 
 doc:
 	mkdir docs
-	cat src/main.j ${SOURCE_FILES} > docs/index.js
-	./node_modules/docco/bin/docco docs/index.js
-	rm -rf docs/index.js
+	cat src/main.js ${SOURCE_FILES} > docs/essential.js
+	./node_modules/docco/bin/docco docs/essential.js
+	mv docs/essential.html docs/index.html
+	rm -rf docs/essential.js
 
 build:
 	cat src/main.js lib/proto.js ${SOURCE_FILES}  > essential.js
