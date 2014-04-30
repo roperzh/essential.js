@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>index.js</title>
+  <title>essential.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>index.js</h1>
+                  <h1>essential.js</h1>
               </div>
           </li>
         
@@ -36,6 +36,8 @@ http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
             
             <div class="content"><div class='highlight'><pre>
 window.Essential = {
+
+  rootElement: document,
 
   Core: {},</pre></div></div>
             
@@ -77,7 +79,7 @@ Essential.start(MyApp);
             
             <div class="content"><div class='highlight'><pre>
   start: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(application)</span> {</span>
-    <span class="hljs-keyword">var</span> crawledContent = <span class="hljs-keyword">this</span>.Core.crawl(),
+    <span class="hljs-keyword">var</span> crawledContent = <span class="hljs-keyword">this</span>.Core.crawl(<span class="hljs-keyword">this</span>.rootElement),
       rawBehaviorsNames = <span class="hljs-built_in">Object</span>.keys(crawledContent),
       i = -<span class="hljs-number">1</span>;
 
@@ -86,7 +88,10 @@ Essential.start(MyApp);
         name = <span class="hljs-keyword">this</span>.Core.camelize(rawName),
         behavior = application[name];
 
-      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> behavior === <span class="hljs-string">"undefined"</span>) <span class="hljs-keyword">continue</span>;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> behavior === <span class="hljs-string">"undefined"</span>) {
+        <span class="hljs-keyword">continue</span>;
+      }
+
       behavior.new(crawledContent[rawName]);
     }
   }
@@ -144,7 +149,9 @@ Essential.Behavior = Proto.extend({
   },
 
   delegateEvents: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>.events === <span class="hljs-string">"undefined"</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>.events === <span class="hljs-string">"undefined"</span>) {
+      <span class="hljs-keyword">return</span>;
+    }
 
     <span class="hljs-keyword">var</span> delegateEventSplitter = <span class="hljs-regexp">/^(\S+)\s*(.*)$/</span>;
 
@@ -156,7 +163,10 @@ Essential.Behavior = Proto.extend({
         selector = match[<span class="hljs-number">2</span>],
         nodeList = selector ? <span class="hljs-keyword">this</span>.el.querySelectorAll(selector) : [<span class="hljs-keyword">this</span>.el];
 
-      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>[method] === <span class="hljs-string">"undefined"</span>) <span class="hljs-keyword">continue</span>;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>[method] === <span class="hljs-string">"undefined"</span>) {
+        <span class="hljs-keyword">continue</span>;
+      }
+
       Essential.Core.bind(eventName, nodeList, <span class="hljs-keyword">this</span>[method]);
     }
   }
@@ -313,10 +323,10 @@ Essential.Core.camelize = <span class="hljs-function"><span class="hljs-keyword"
   replace(Essential.Core.FIRST_LETTER_REGEXP, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(letter)</span> {</span>
     <span class="hljs-keyword">return</span> letter.toUpperCase();
   }).
-  replace(Essential.Core.SPECIAL_CHARS_REGEXP, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(_, separator, letter, offset)</span> {</span>
+  replace(Essential.Core.SPECIAL_CHARS_REGEXP, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(_, separator, letter)</span> {</span>
     <span class="hljs-keyword">return</span> letter.toUpperCase();
   });
-}</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -354,8 +364,8 @@ a key and the DOM node as a value</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-Essential.Core.crawl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-  <span class="hljs-keyword">var</span> all = document.querySelectorAll(<span class="hljs-string">"[data-behavior], [behavior]"</span>),
+Essential.Core.crawl = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rootElement)</span> {</span>
+  <span class="hljs-keyword">var</span> all = rootElement.querySelectorAll(<span class="hljs-string">"[data-behavior], [behavior]"</span>),
     i = -<span class="hljs-number">1</span>,
     result = {};
 
