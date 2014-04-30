@@ -23,6 +23,7 @@ describe("Essential.Core#bind", function () {
 
       expect(Helper.flag).to.be.eql(0);
     });
+
   });
 
   context("given an Array of nodeElements", function () {
@@ -48,6 +49,26 @@ describe("Essential.Core#bind", function () {
       applyToAll(this.arrayOfElements, "dispatchEvent", Events.click());
 
       expect(Helper.flag).to.be.eql(0);
+    });
+
+  });
+
+  context("given a browser without addEventListener function", function () {
+
+    it("must try to attach the events with attachEvent instead", function () {
+      setDocumentContents("test/fixtures/basic_structure.html");
+      var nodeList = document.querySelectorAll("[data-behavior]"),
+        testElement = nodeList[0];
+
+      // Trick to make available attachEvent on PhanthomJS
+      testElement.attachEvent = testElement.addEventListener
+      testElement.addEventListener = null;
+
+      expect(
+        function () {
+          Essential.Core.bind("hover", nodeList, Helper.changeFlag);
+        }
+      ).to.not.throw();
     });
 
   });
