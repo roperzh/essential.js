@@ -12,6 +12,17 @@ describe("Essential.Behavior", function () {
       expect(this.behavior.el).to.be.eq(this.domElement);
     });
 
+    it("executes `init` function on initialization", function () {
+      var initFlag = 0,
+          behaviorWithInit = Essential.Behavior.extend({
+            init: function() {
+              initFlag++;
+            }
+          });
+      var behavior = behaviorWithInit.new(this.domElement);
+      expect(initFlag).to.not.equal(0);
+    });
+
     context("given a hash of events", function () {
 
       it("delegates the events contained in the hash to `this.el` if no selector is present", function () {
