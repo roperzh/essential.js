@@ -5,6 +5,8 @@
 
 window.Essential = {
 
+  rootElement: document,
+
   Core: {},
 
   // Start
@@ -27,7 +29,7 @@ window.Essential = {
   // ```
 
   start: function (application) {
-    var crawledContent = this.Core.crawl(),
+    var crawledContent = this.Core.crawl(this.rootElement),
       rawBehaviorsNames = Object.keys(crawledContent),
       i = -1;
 
@@ -36,11 +38,17 @@ window.Essential = {
         name = this.Core.camelize(rawName),
         behavior = application[name];
 
-      if (typeof behavior === "undefined") continue;
-      behavior.new(crawledContent[rawName]);
+      if (typeof behavior !== "undefined") {
+        var behaviorsList = crawledContent[rawName],
+          j = -1;
+
+        while(behaviorsList[++j]) {
+          behavior.new(behaviorsList[j]);
+        }
+      }
+
     }
   }
-
 };
 /*!
  * Includes proto-js by Axel Rauschmayer
@@ -107,10 +115,15 @@ Essential.Behavior = Proto.extend({
   constructor: function (domElement) {
     this.el = domElement;
     this.delegateEvents();
+    if (typeof this.init === "function") {
+      this.init();
+    }
   },
 
   delegateEvents: function () {
-    if (typeof this.events === "undefined") return;
+    if (typeof this.events === "undefined") {
+      return;
+    }
 
     var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
@@ -122,7 +135,10 @@ Essential.Behavior = Proto.extend({
         selector = match[2],
         nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
 
-      if (typeof this[method] === "undefined") continue;
+      if (typeof this[method] === "undefined") {
+        continue;
+      }
+
       Essential.Core.bind(eventName, nodeList, this[method]);
     }
   }
@@ -198,17 +214,17 @@ Essential.Core.camelize = function (name) {
   replace(Essential.Core.FIRST_LETTER_REGEXP, function (letter) {
     return letter.toUpperCase();
   }).
-  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
+  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter) {
     return letter.toUpperCase();
   });
-}
+};
 // Crawl
 //------
 //
 // Scans the DOM looking for behaviors
 //
 // Return `Array<Object>` an array of objects with the behavior name as
-// a key and the DOM node as a value
+// a key and an array of DOM nodes as a value
 //
 // **Example**
 //
@@ -219,11 +235,11 @@ Essential.Core.camelize = function (name) {
 // ```javascript
 // Essential.Core.crawl();
 //
-// // => [{ 'carousel': <HTMLDivElement> }]
+// // => [{ carousel: [<HTMLDivElement>, <HTMLDivElement>] }]
 // ```
 
-Essential.Core.crawl = function () {
-  var all = document.querySelectorAll("[data-behavior], [behavior]"),
+Essential.Core.crawl = function(rootElement) {
+  var all = rootElement.querySelectorAll("[data-behavior], [behavior]"),
     i = -1,
     result = {};
 
@@ -234,7 +250,13 @@ Essential.Core.crawl = function () {
       j = -1;
 
     while (behaviorsList[++j]) {
-      result[behaviorsList[j]] = currentElement;
+      var currentBehavior = behaviorsList[j];
+
+      if (result[currentBehavior]) {
+        result[currentBehavior].push(currentElement);
+      } else {
+        result[currentBehavior] = [currentElement];
+      }
     }
   }
 
