@@ -4,7 +4,7 @@
 // Scans the DOM looking for behaviors
 //
 // Return `Array<Object>` an array of objects with the behavior name as
-// a key and the DOM node as a value
+// a key and an array of DOM nodes as a value
 //
 // **Example**
 //
@@ -15,10 +15,10 @@
 // ```javascript
 // Essential.Core.crawl();
 //
-// // => [{ 'carousel': <HTMLDivElement> }]
+// // => [{ carousel: [<HTMLDivElement>, <HTMLDivElement>] }]
 // ```
 
-Essential.Core.crawl = function (rootElement) {
+Essential.Core.crawl = function(rootElement) {
   var all = rootElement.querySelectorAll("[data-behavior], [behavior]"),
     i = -1,
     result = {};
@@ -30,7 +30,13 @@ Essential.Core.crawl = function (rootElement) {
       j = -1;
 
     while (behaviorsList[++j]) {
-      result[behaviorsList[j]] = currentElement;
+      var currentBehavior = behaviorsList[j];
+
+      if (result[currentBehavior]) {
+        result[currentBehavior].push(currentElement);
+      } else {
+        result[currentBehavior] = [currentElement];
+      }
     }
   }
 
