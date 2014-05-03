@@ -11,7 +11,7 @@ describe("Essential.Core#crawl", function() {
       expect(Object.keys(this.crawledContent).length).to.eql(6);
     });
 
-    it("every key of the object must have the name of the associated behavior", function() {
+    it("must return an object with the name of the associated behaviors as keys", function() {
       expect(Object.keys(this.crawledContent)).to.eql(
         ["test", "test-inner", "multiple1", "multiple2", "test2", "test-inner2"]
       );
