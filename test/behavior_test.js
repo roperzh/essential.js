@@ -20,7 +20,7 @@ describe("Essential.Behavior", function () {
             }
           });
       var behavior = behaviorWithInit.new(this.domElement);
-      expect(initFlag).to.not.equal(0);
+      expect(initFlag).to.be.equal(1);
     });
 
     context("given a hash of events", function () {
