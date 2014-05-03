@@ -27,6 +27,9 @@ Essential.Behavior = Proto.extend({
   constructor: function (domElement) {
     this.el = domElement;
     this.delegateEvents();
+    if (typeof this.init === "function") {
+      this.init();
+    }
   },
 
   delegateEvents: function () {
