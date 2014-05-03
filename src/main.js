@@ -38,12 +38,15 @@ window.Essential = {
         name = this.Core.camelize(rawName),
         behavior = application[name];
 
-      if (typeof behavior === "undefined") {
-        continue;
+      if (typeof behavior !== "undefined") {
+        var behaviorsList = crawledContent[rawName],
+          j = -1;
+
+        while(behaviorsList[++j]) {
+          behavior.new(behaviorsList[j]);
+        }
       }
 
-      behavior.new(crawledContent[rawName]);
     }
   }
-
 };

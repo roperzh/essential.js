@@ -42,4 +42,31 @@ describe("Essential.Core#crawl", function() {
       expect(Object.keys(crawledContent).length).to.be.eql(0);
     });
   });
+
+  context("given a behavior associated to multiple elements", function() {
+    beforeEach(function() {
+      setDocumentContents("test/fixtures/repeated_behavior.html");
+      this.crawledContent = Essential.Core.crawl(document);
+    });
+
+    it("must return an object with the correct number of keys", function() {
+      expect(Object.keys(this.crawledContent).length).to.be.eq(1);
+    });
+
+    it("must return an object with the correct key names", function() {
+      expect(Object.keys(this.crawledContent)[0]).to.be.eq("carousel");
+    });
+
+    it("must return an object with an array of elements as a value", function() {
+      expect(Array.isArray(this.crawledContent["carousel"])).to.be.eq(true);
+    });
+
+    it("must return an object with the correct values in every key", function() {
+      var firstCarousel = document.getElementById("first-carousel"),
+        secondCarousel = document.getElementById("second-carousel");
+
+      expect(this.crawledContent["carousel"]).to.include(firstCarousel);
+      expect(this.crawledContent["carousel"]).to.include(secondCarousel);
+    });
+  });
 });
