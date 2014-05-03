@@ -13,14 +13,18 @@ describe("Essential.Behavior", function () {
     });
 
     it("executes `init` function on initialization", function () {
-      var initFlag = 0,
-          behaviorWithInit = Essential.Behavior.extend({
-            init: function() {
-              initFlag++;
-            }
-          });
-      var behavior = behaviorWithInit.new(this.domElement);
-      expect(initFlag).to.be.equal(1);
+      BehaviorWithInit = Essential.Behavior.extend({
+        init: Helper.changeFlag
+      });
+
+      var behavior = BehaviorWithInit.new(this.domElement);
+      expect(Helper.flag).to.be.equal(1);
+    });
+
+    it("initializes without any problems if the `init` function is not present",function() {
+      expect(function() {
+        Essential.Behavior.new(this.domElement);
+      }).to.not.throw();
     });
 
     context("given a hash of events", function () {

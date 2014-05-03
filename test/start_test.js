@@ -34,7 +34,7 @@ describe("Essential#start", function () {
         expect(function () {
           Essential.start(self.app);
         }).to.not.
-        throw ();
+        throw();
       });
     });
   });
