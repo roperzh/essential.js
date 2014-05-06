@@ -8,12 +8,19 @@
 // When a behavior is defined, a hash of events must be defined too,
 // and on initialization a DOM element must be provided
 //
+// Also you can define an `init` function, who is always called when the
+// behavior is initialized
+//
 // **Example**
 // ```javascript
 // Carousel = Essential.Behavior.extend({
 //   events: {
 //     "click .next": "goToNextSlide"
 //   },
+//
+//  init: function() {
+//    // Called on behavior initialization
+//  },
 //
 //   goToNextSlide: function(e) {
 //     //...
@@ -27,6 +34,7 @@ Essential.Behavior = Proto.extend({
   constructor: function (domElement) {
     this.el = domElement;
     this.delegateEvents();
+
     if (typeof this.init === "function") {
       this.init();
     }
