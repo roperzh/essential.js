@@ -2,13 +2,13 @@
 // --------
 //
 // Represents a behavior of some element or group of elements.
-// The objetive is define a set of rules and events who
+// The objetive is define a set of rules and events which
 // can be associated to an element and reutilized later on
 //
 // When a behavior is defined, a hash of events must be defined too,
 // and on initialization a DOM element must be provided
 //
-// Also you can define an `init` function, who is always called when the
+// Also you can define an `init` function, which is always called when the
 // behavior is initialized
 //
 // **Example**
