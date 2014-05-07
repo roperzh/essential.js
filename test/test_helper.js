@@ -1,7 +1,7 @@
 var context = describe;
 
 var setDocumentContents = function(fixture) {
-  var path = "test/fixtures/" + fixture + ".html"
+  var path = "test/fixtures/" + fixture + ".html";
   document.body.innerHTML = __html__[path];
 };
 
