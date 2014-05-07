@@ -2,7 +2,7 @@ describe("Essential.Core#bind", function () {
   context("given a NodeList", function () {
 
     beforeEach(function () {
-      setDocumentContents("test/fixtures/basic_structure.html");
+      setDocumentContents("basic_structure");
       this.nodeList = document.querySelectorAll("[data-behavior]");
 
       Helper.flag = 0;
@@ -29,7 +29,7 @@ describe("Essential.Core#bind", function () {
   context("given an Array of nodeElements", function () {
 
     beforeEach(function () {
-      setDocumentContents("test/fixtures/basic_structure.html");
+      setDocumentContents("basic_structure");
       elements = document.getElementsByTagName("li");
       this.arrayOfElements = [elements[0], elements[1]];
       Helper.flag = 0;
@@ -56,7 +56,7 @@ describe("Essential.Core#bind", function () {
   context("given a browser without addEventListener function", function () {
 
     it("must try to attach the events with attachEvent instead", function () {
-      setDocumentContents("test/fixtures/basic_structure.html");
+      setDocumentContents("basic_structure");
       var nodeList = document.querySelectorAll("[data-behavior]"),
         testElement = nodeList[0];
 

@@ -2,7 +2,7 @@ describe("Essential.Core#crawl", function() {
   context("given six associated behaviors in the rootElement", function() {
 
     beforeEach(function() {
-      setDocumentContents("test/fixtures/basic_structure.html");
+      setDocumentContents("basic_structure");
       this.crawledContent = Essential.Core.crawl(document);
     });
 
@@ -35,7 +35,7 @@ describe("Essential.Core#crawl", function() {
   context("given no associated behaviors in the rootElement", function() {
 
     it("must return an empty object", function() {
-      setDocumentContents("test/fixtures/page_without_behaviors.html");
+      setDocumentContents("page_without_behaviors");
       var crawledContent = Essential.Core.crawl(document);
 
       expect(crawledContent).to.be.an("Object");
@@ -45,7 +45,7 @@ describe("Essential.Core#crawl", function() {
 
   context("given a behavior associated to multiple elements", function() {
     beforeEach(function() {
-      setDocumentContents("test/fixtures/repeated_behavior.html");
+      setDocumentContents("repeated_behavior");
       this.crawledContent = Essential.Core.crawl(document);
     });
 
