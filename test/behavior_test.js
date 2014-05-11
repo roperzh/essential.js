@@ -2,7 +2,7 @@ describe("Essential.Behavior", function () {
   context("given a DOM element", function () {
 
     beforeEach(function () {
-      setDocumentContents("test/fixtures/single_element.html");
+      setDocumentContents("single_element");
       this.domElement = document.getElementById("carousel");
       this.behavior = customBehavior.new(this.domElement);
       Helper.flag = 0;

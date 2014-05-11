@@ -39,11 +39,11 @@ window.Essential = {
         behavior = application[name];
 
       if (typeof behavior !== "undefined") {
-        var behaviorsList = crawledContent[rawName],
+        var elementsList = crawledContent[rawName],
           j = -1;
 
-        while(behaviorsList[++j]) {
-          behavior.new(behaviorsList[j]);
+        while(elementsList[++j]) {
+          behavior.new(elementsList[j]);
         }
       }
 

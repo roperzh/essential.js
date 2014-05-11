@@ -1,7 +1,8 @@
 var context = describe;
 
 var setDocumentContents = function(fixture) {
-  document.body.innerHTML = __html__[fixture];
+  var path = "test/fixtures/" + fixture + ".html";
+  document.body.innerHTML = __html__[path];
 };
 
 var Helper = {

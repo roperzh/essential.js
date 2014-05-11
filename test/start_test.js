@@ -2,7 +2,7 @@ describe("Essential#start", function () {
   context("given an application and a behavior attached to a DOM element", function () {
 
     beforeEach(function () {
-      setDocumentContents("test/fixtures/single_element.html");
+      setDocumentContents("single_element");
       this.domElement = document.getElementById("carousel");
       this.app = {};
     });
