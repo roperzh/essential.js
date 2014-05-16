@@ -28,9 +28,15 @@ window.Essential = {
   // // will attach the carousel behavior to proper elements
   // ```
 
-  start: function (application) {
-    var crawledContent = this.Core.crawl(this.rootElement),
-      rawBehaviorsNames = Object.keys(crawledContent),
+  start: function(application) {
+    var initializedBehaviors = this.initializeBehaviors(application);
+    this.launchBehaviors(initializedBehaviors);
+  },
+
+  initializeBehaviors: function(application) {
+    var behaviorsInDOM = this.Core.crawl(this.rootElement),
+      rawBehaviorsNames = Object.keys(behaviorsInDOM),
+      initializedBehaviors = [],
       i = -1;
 
     while (rawBehaviorsNames[++i]) {
@@ -39,14 +45,25 @@ window.Essential = {
         behavior = application[name];
 
       if (typeof behavior !== "undefined") {
-        var behaviorsList = crawledContent[rawName],
+        var elementsWithBehavior = behaviorsInDOM[rawName],
           j = -1;
 
-        while(behaviorsList[++j]) {
-          behavior.new(behaviorsList[j]);
+        while (elementsWithBehavior[++j]) {
+          var initializedBehavior = behavior.new(elementsWithBehavior[j], true);
+          initializedBehaviors.push(initializedBehavior);
         }
       }
+    }
 
+    return initializedBehaviors;
+  },
+
+  launchBehaviors: function(behaviorList) {
+    var sortedBehaviors = behaviorList.sort(this.Core.SortMethods.byPriority),
+      i = -1;
+
+    while (sortedBehaviors[++i]) {
+      sortedBehaviors[i].start();
     }
   }
 };
