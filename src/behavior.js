@@ -61,5 +61,7 @@ Essential.Behavior = Proto.extend({
 
       Essential.Core.bind(eventName, nodeList, this[method]);
     }
-  }
+  },
+
+  priority: 0
 });
