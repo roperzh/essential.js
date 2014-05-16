@@ -31,8 +31,27 @@
 // ```
 
 Essential.Behavior = Proto.extend({
-  constructor: function (domElement) {
+  constructor: function(domElement, lateStart) {
     this.el = domElement;
+
+    // A behavior can be initialized without attaching events with the `lateStart`
+    // flag, if it is present the methods `delegateEvents` and `ìnit` are omitted
+    // but can be called later with `start`
+    //
+    // **Example**
+    // ```javascript
+    // carousel = new Carousel(domElement, true);
+    // // delegateEvents and init not called
+    //
+    // carousel.start();
+    // // delegateEvents and init called
+
+    if (!lateStart) {
+      this.start();
+    }
+  },
+
+  start: function() {
     this.delegateEvents();
 
     if (typeof this.init === "function") {
@@ -40,7 +59,7 @@ Essential.Behavior = Proto.extend({
     }
   },
 
-  delegateEvents: function () {
+  delegateEvents: function() {
     if (typeof this.events === "undefined") {
       return;
     }
@@ -61,5 +80,7 @@ Essential.Behavior = Proto.extend({
 
       Essential.Core.bind(eventName, nodeList, this[method]);
     }
-  }
+  },
+
+  priority: 0
 });

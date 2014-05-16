@@ -59,4 +59,9 @@ describe("Essential.Behavior", function () {
       });
     });
   });
+
+  it("has a default priority equal to zero", function() {
+    var behavior = Essential.Behavior.extend({});
+    expect(behavior.priority).to.be.eq(0);
+  });
 });
