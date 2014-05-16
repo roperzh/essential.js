@@ -23,4 +23,7 @@ min:
 	gzip -9 < essential.js | wc
 	gzip -9 < essential.min.js | wc
 
+beautify:
+	find {src,test} -type f -name "*.js" -exec js-beautify -r {} \;
+
 .PHONY: test
