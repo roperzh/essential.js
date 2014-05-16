@@ -46,7 +46,7 @@ Essential.Behavior = Proto.extend({
     // carousel.start();
     // // delegateEvents and init called
 
-    if (!lateStart) {
+    if(!lateStart) {
       this.start();
     }
   },
@@ -54,19 +54,19 @@ Essential.Behavior = Proto.extend({
   start: function() {
     this.delegateEvents();
 
-    if (typeof this.init === "function") {
+    if(typeof this.init === "function") {
       this.init();
     }
   },
 
   delegateEvents: function() {
-    if (typeof this.events === "undefined") {
+    if(typeof this.events === "undefined") {
       return;
     }
 
     var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
-    for (var key in this.events) {
+    for(var key in this.events) {
       var method = this.events[key];
 
       var match = key.match(delegateEventSplitter);
@@ -74,7 +74,7 @@ Essential.Behavior = Proto.extend({
         selector = match[2],
         nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
 
-      if (typeof this[method] === "undefined") {
+      if(typeof this[method] === "undefined") {
         continue;
       }
 

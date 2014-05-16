@@ -39,16 +39,16 @@ window.Essential = {
       initializedBehaviors = [],
       i = -1;
 
-    while (rawBehaviorsNames[++i]) {
+    while(rawBehaviorsNames[++i]) {
       var rawName = rawBehaviorsNames[i],
         name = this.Core.camelize(rawName),
         behavior = application[name];
 
-      if (typeof behavior !== "undefined") {
+      if(typeof behavior !== "undefined") {
         var elementsWithBehavior = behaviorsInDOM[rawName],
           j = -1;
 
-        while (elementsWithBehavior[++j]) {
+        while(elementsWithBehavior[++j]) {
           var initializedBehavior = behavior.new(elementsWithBehavior[j], true);
           initializedBehaviors.push(initializedBehavior);
         }
@@ -62,7 +62,7 @@ window.Essential = {
     var sortedBehaviors = behaviorList.sort(this.Core.SortMethods.byPriority),
       i = -1;
 
-    while (sortedBehaviors[++i]) {
+    while(sortedBehaviors[++i]) {
       sortedBehaviors[i].start();
     }
   }

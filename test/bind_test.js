@@ -1,14 +1,14 @@
-describe("Essential.Core#bind", function () {
-  context("given a NodeList", function () {
+describe("Essential.Core#bind", function() {
+  context("given a NodeList", function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       setDocumentContents("test/fixtures/basic_structure.html");
       this.nodeList = document.querySelectorAll("[data-behavior]");
 
       Helper.flag = 0;
     });
 
-    it("must bind a given event on every node", function () {
+    it("must bind a given event on every node", function() {
       Essential.Core.bind("hover", this.nodeList, Helper.changeFlag);
 
       applyToAll(this.nodeList, "dispatchEvent", Events.hover());
@@ -16,7 +16,7 @@ describe("Essential.Core#bind", function () {
       expect(Helper.flag).to.be.eql(this.nodeList.length);
     });
 
-    it("must bind only the requested event", function () {
+    it("must bind only the requested event", function() {
       Essential.Core.bind("hover", this.nodeList, Helper.changeFlag);
 
       applyToAll(this.nodeList, "dispatchEvent", Events.click());
@@ -26,16 +26,16 @@ describe("Essential.Core#bind", function () {
 
   });
 
-  context("given an Array of nodeElements", function () {
+  context("given an Array of nodeElements", function() {
 
-    beforeEach(function () {
+    beforeEach(function() {
       setDocumentContents("test/fixtures/basic_structure.html");
       elements = document.getElementsByTagName("li");
       this.arrayOfElements = [elements[0], elements[1]];
       Helper.flag = 0;
     });
 
-    it("must bind a given event on every node", function () {
+    it("must bind a given event on every node", function() {
       Essential.Core.bind("hover", this.arrayOfElements, Helper.changeFlag);
 
       applyToAll(this.arrayOfElements, "dispatchEvent", Events.hover());
@@ -43,7 +43,7 @@ describe("Essential.Core#bind", function () {
       expect(Helper.flag).to.be.eql(this.arrayOfElements.length);
     });
 
-    it("must bind only the requested event", function () {
+    it("must bind only the requested event", function() {
       Essential.Core.bind("hover", this.arrayOfElements, Helper.changeFlag);
 
       applyToAll(this.arrayOfElements, "dispatchEvent", Events.click());
@@ -53,9 +53,9 @@ describe("Essential.Core#bind", function () {
 
   });
 
-  context("given a browser without addEventListener function", function () {
+  context("given a browser without addEventListener function", function() {
 
-    it("must try to attach the events with attachEvent instead", function () {
+    it("must try to attach the events with attachEvent instead", function() {
       setDocumentContents("test/fixtures/basic_structure.html");
       var nodeList = document.querySelectorAll("[data-behavior]"),
         testElement = nodeList[0];
@@ -65,7 +65,7 @@ describe("Essential.Core#bind", function () {
       testElement.addEventListener = null;
 
       expect(
-        function () {
+        function() {
           Essential.Core.bind("hover", nodeList, Helper.changeFlag);
         }
       ).to.not.throw();

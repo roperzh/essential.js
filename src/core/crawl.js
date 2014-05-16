@@ -23,16 +23,16 @@ Essential.Core.crawl = function(rootElement) {
     i = -1,
     result = {};
 
-  while (all[++i]) {
+  while(all[++i]) {
     var currentElement = all[i],
       rawBehaviors = currentElement.getAttribute("data-behavior") || currentElement.getAttribute("behavior"),
       behaviorsList = rawBehaviors.split(" "),
       j = -1;
 
-    while (behaviorsList[++j]) {
+    while(behaviorsList[++j]) {
       var currentBehavior = behaviorsList[j];
 
-      if (result[currentBehavior]) {
+      if(result[currentBehavior]) {
         result[currentBehavior].push(currentElement);
       } else {
         result[currentBehavior] = [currentElement];

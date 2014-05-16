@@ -7,19 +7,19 @@ var setDocumentContents = function(fixture) {
 var Helper = {
   flag: 0,
 
-  changeFlag: function () {
+  changeFlag: function() {
     Helper.flag++;
   }
 };
 
 var Events = {
-  click: function () {
+  click: function() {
     clickEvent = document.createEvent("Event");
     clickEvent.initEvent('click', false, true);
     return clickEvent;
   },
 
-  hover: function () {
+  hover: function() {
     hoverEvent = document.createEvent("Event");
     hoverEvent.initEvent('hover', false, true);
     return hoverEvent;
@@ -33,19 +33,19 @@ var customBehavior = Essential.Behavior.extend({
     "hover": "notDefinedEvent"
   },
 
-  clickHandler: function () {
+  clickHandler: function() {
     Helper.changeFlag();
   },
 
-  customClickHandler: function () {
+  customClickHandler: function() {
     Helper.changeFlag();
   }
 });
 
-var applyToAll = function (collection, callback, options) {
+var applyToAll = function(collection, callback, options) {
   var i = -1;
 
-  while (collection[++i]) {
+  while(collection[++i]) {
     collection[i][callback](options);
   }
 };

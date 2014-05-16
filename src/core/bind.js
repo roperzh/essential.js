@@ -22,13 +22,13 @@
 // // elements in the nodeList the alert will appear
 // ```
 
-Essential.Core.bind = function (eventName, nodeList, callback) {
+Essential.Core.bind = function(eventName, nodeList, callback) {
   var i = -1;
 
-  while (nodeList[++i]) {
+  while(nodeList[++i]) {
     var currentElement = nodeList[i];
 
-    if (currentElement.addEventListener) {
+    if(currentElement.addEventListener) {
       nodeList[i].addEventListener(eventName, callback);
     } else {
       currentElement.attachEvent("on" + eventName, callback);

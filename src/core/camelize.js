@@ -27,12 +27,12 @@ Essential.Core.FIRST_LETTER_REGEXP = /^[a-z]/g;
 // // => CoolCarousel
 // ```
 
-Essential.Core.camelize = function (name) {
+Essential.Core.camelize = function(name) {
   return name.
-  replace(Essential.Core.FIRST_LETTER_REGEXP, function (letter) {
+  replace(Essential.Core.FIRST_LETTER_REGEXP, function(letter) {
     return letter.toUpperCase();
   }).
-  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter) {
+  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function(_, separator, letter) {
     return letter.toUpperCase();
   });
 };
