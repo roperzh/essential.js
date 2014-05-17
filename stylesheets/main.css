@@ -1,29 +1,33 @@
 /* Layouts */
 #presentation {
   position: relative;
-  top: -21px;
   width: 100%;
-  height: 490px;
+  height: 450px;
   background: #55AC40;
+  text-align: center;
 }
 
 #presentation > .downloads {
   position: relative;
-  top: 25%;
-  text-align: center;
+  top: 120px;
 }
 
-#presentation > .arrow-down {
-  position: absolute;
-  bottom: -20px;
+#presentation > .features {
+  position: relative;
+  top: 140px;
 }
+
 
 #fixed-menu {
   position: fixed;
   width: 100%;
+  height: 45px;
   top: 0;
   left: 0;
   z-index: 999;
+  margin: 0;
+  padding-top: 15px;
+  background: #55AC40;
 }
 
 /* Modules */
@@ -71,25 +75,11 @@
   font-size: 30px;
 }
 
-.arrow-down {
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-
-  border-top: 20px solid #55AC40;
-}
-
-.features {
-  text-align: center;
-  position: relative;
-  top: 140px;
-}
-
 .feature-list {
   color: white;
   list-style: none;
   font-size: 20px;
+  padding: 0;
 }
 
 .feature-list li {
@@ -98,6 +88,28 @@
 
 .feature-list li i {
   margin-right: 5px;
+}
+
+.container {
+  width: 90%;
+  margin: 0px auto;
+}
+
+.separator {
+  text-align: center;
+  border-top: 1px solid #ddd;
+  margin: 40px 0 -30px;
+  letter-spacing: 1px;
+}
+
+.separator h5 {
+  position: relative;
+  top: -35px;
+  display: inline-block;
+  padding: 0 1em;
+  background-color: #fff;
+  color: #bbb;
+  font-weight: 400;
 }
 
 /* States */
