@@ -12,6 +12,7 @@
 
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/normalize.css">
+  <link rel="stylesheet" href="stylesheets/highlight.css">
   <link rel="stylesheet" href="stylesheets/main.css">
 </head>
 <body>
@@ -32,21 +33,31 @@
       <a href="#" class="nav-item">Docs</a>
     </li>
     <li class="pull-right">
-      <a href="#" class="nav-item">Annotated Source</a>
+      <a href="/docs" class="nav-item">Annotated Source</a>
     </li>
   </ul>
 </nav>
 
 <header id="presentation">
-  <h1 class="main-title fixed-width">Modular and lightweight JavaScript framework</h1>
-  <section class="download-options">
-    <button class="button">Download <i class="fa fa-download"></i></button>
-    <button class="button">Get with bower</button>
+  <section class="downloads">
+      <h1 class="main-title">Modular and lightweight </br> JavaScript framework for the browser</h1>
+    <a href="http://raw.githubusercontent.com/roperzh/essential.js/master/essential.min.js" class="button" download>Download <i class="fa fa-download"></i></a>
+    <a class="button">Get it with bower</a>
+  </section>
+  <section class="features">
+    <ul class="feature-list clearfix">
+      <li><i class="fa fa-angle-right"></i>2.104 kb minified</li>
+      <li><i class="fa fa-angle-right"></i>No dependencies</li>
+      <li><i class="fa fa-angle-right"></i>Reusable components</li>
+      <li><i class="fa fa-angle-right"></i>Well tested</li>
+    </ul>
   </section>
   <span class="arrow-down"></span>
 </header>
 
+<script src="javascripts/highlight.js"></script>
 <script src="javascripts/main.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>

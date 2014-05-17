@@ -7,17 +7,10 @@
   background: #55AC40;
 }
 
-#presentation > .main-title {
+#presentation > .downloads {
   position: relative;
   top: 25%;
-  left: 5%;
-}
-
-#presentation > .download-options {
-  position: relative;
-  right: 0;
-  top: 150px;
-  left: 59%;
+  text-align: center;
 }
 
 #presentation > .arrow-down {
@@ -57,12 +50,10 @@
 }
 
 .main-title {
+  margin-bottom: 30px;
+  font-weight: 100;
+  text-align: center;
   color: white;
-  text-transform: uppercase;
-}
-
-.fixed-width {
-  width: 50%;
 }
 
 .button {
@@ -72,6 +63,7 @@
 
   border: 1px solid white;
   border-radius: 10px;
+  text-decoration: none;
   color: white;
 }
 
@@ -86,6 +78,26 @@
   border-right: 20px solid transparent;
 
   border-top: 20px solid #55AC40;
+}
+
+.features {
+  text-align: center;
+  position: relative;
+  top: 140px;
+}
+
+.feature-list {
+  color: white;
+  list-style: none;
+  font-size: 20px;
+}
+
+.feature-list li {
+  margin: 10px 0px;
+}
+
+.feature-list li i {
+  margin-right: 5px;
 }
 
 /* States */
