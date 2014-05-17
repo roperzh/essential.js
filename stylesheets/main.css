@@ -112,6 +112,15 @@
   font-weight: 400;
 }
 
+.column {
+  display: inline-block;
+}
+
+.half-width {
+  width: 44%;
+  margin: 0 2.5%;
+}
+
 /* States */
 
 .pull-right {
