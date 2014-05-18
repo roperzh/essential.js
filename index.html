@@ -27,7 +27,7 @@
       <a href="http://github.com/roperzh/essential.js" class="nav-item fa fa-github"></a>
     </li>
     <li class="pull-right">
-      <a href="#" class="nav-item">Examples</a>
+      <a href="#examples" class="nav-item">Examples</a>
     </li>
     <li class="pull-right">
       <a href="#" class="nav-item">Docs</a>
@@ -40,7 +40,7 @@
 
 <header id="presentation">
   <section class="downloads">
-      <h1 class="main-title">Modular and lightweight </br> JavaScript framework for the browser</h1>
+      <h1 class="main-title">Modular and lightweight </br> JavaScript micro framework for the browser</h1>
     <a href="http://raw.githubusercontent.com/roperzh/essential.js/master/essential.min.js" class="button" download>Download <i class="fa fa-download"></i></a>
     <a class="button">Get it with bower</a>
   </section>
@@ -54,27 +54,230 @@
   </section>
 </header>
 
-<div class="container">
+<div class="container clearfix">
   <div class="separator"><h5>Overview</h5></div>
-  <p class="column half-width">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <section class="column half-width">
+    <p>An Essential application is built with modules called <span class="code-snippet">behaviors</span></p>
+    <p>Every behavior describes an specific functionality of your application</p>
+    <p>You can nest behaviors, initialize behaviors inside others, and share logic
+    between them. They are designed to be fast and testable entities.</p>
+    <p>The box on the rigth is an example of a behavior in action</p>
+  </section>
 
-  <pre class="column half-width">
-    <code>
-      Essential.start()
-    </code>
-  </pre>
+  <div class="column half-width tabbed-container" behavior="tabbed-container">
+    <ul class="clearfix">
+      <li class="tab-header active" data-content="js"><a href="#">JS</a></li>
+      <li class="tab-header" data-content="html"><a href="#">HTML</a></li>
+    </ul>
+    <div class="tab-content active" data-name="js">
+      <pre behavior="code-area">
+        <code>
+Page = {};
+
+Page.TabbedContainer = Essential.Behavior.extend({
+  init: function() {
+    // Called on initialization
+  },
+
+  events: {
+    "click .tab-header": "switchTab"
+  },
+
+  switchTab: function(e) {
+    // this.el => domElement
+  }
+});
+
+Essential.start(Page);
+        </code>
+      </pre>
+    </div>
+    <div class="tab-content" data-name="html">
+      <pre behavior="code-area">
+        <code>
+&lt;div behavior=&quot;tabbed-container&quot;&gt;
+  &lt;ul&gt;
+    &lt;li class=&quot;tab-header&quot; data-content=&quot;js&quot;&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;tab-header&quot; data-content=&quot;html&quot;&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class=&quot;tab-content active&quot; data-name=&quot;js&quot;&gt;
+    &lt;!-- Tab content here --&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;tab-content&quot; data-name=&quot;html&quot;&gt;
+    &lt;!-- Tab content here --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+        </code>
+      </pre>
+    </div>
+  </div>
 </div>
 
+<a href="#" name="examples"></a>
+<div class="container clearfix">
+  <div class="separator"><h5>Examples</h5></div>
+  <section class="column half-width">
+    <h2 class="section-title">Initialization</h2>
+    <p>Once you have defined your behaviors there are two ways to attach a behavior to a DOM element:</p>
+    <p>
+       - Define a <span class="code-snippet">data-behavior</span> attribute in the element
+      with the associated behavior, Essential will automatically start a new behavior with
+      the element accesible through the <span class="code-snippet">el</span> property.
+    </p>
+    <p>
+      - Instantiate a behavior manually with the <span class="code-snippet">new</span> method,
+      passing the DOM element to be attached as argument.
+    </p>
+    <div class="tabbed-container" behavior="tabbed-container">
+      <ul class="clearfix">
+        <li class="tab-header active" data-content="js"><a href="#">JS</a></li>
+        <li class="tab-header" data-content="html"><a href="#">HTML</a></li>
+      </ul>
+      <div class="tab-content active" data-name="js">
+        <pre behavior="code-area">
+          <code>
+App.MyBehavior = Essential.Behavior.extend();
+
+// start all the attached behaviors via data-attributes
+Essential.start(App);
+
+// or call the new method
+var domElement = document.getElementById("find-me");
+App.MyBehavior.new(domElement);
+          </code>
+          </pre>
+        </div>
+        <div class="tab-content" data-name="html">
+          <pre behavior="code-area">
+            <code>
+&lt;div id=&quot;find-me&quot; data-behavior=&quot;my-behavior&quot;&gt;&lt;/div&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+  </section>
+  <section class="column half-width">
+    <h2 class="section-title">Inheritance</h2>
+    <p>
+      You can define behaviors based in other behaviors with the <span class="code-snippet">extend</span>
+      method
+    </p>
+    <div class="tabbed-container" behavior="tabbed-container">
+      <ul class="clearfix">
+        <li class="tab-header active" data-content="js"><a href="#">JS</a></li>
+        <li class="tab-header" data-content="html"><a href="#">HTML</a></li>
+      </ul>
+      <div class="tab-content active" data-name="js">
+        <pre behavior="code-area">
+          <code>
+App.StandardCarousel = Essential.Behavior.extend({
+  events: {
+    "click .arrow" : "changeSlide"
+  }
+});
+
+App.CoolCarousel = App.StandardCarousel.extend({
+  //...
+});
+          </code>
+          </pre>
+        </div>
+        <div class="tab-content" data-name="html">
+          <pre behavior="code-area">
+            <code>
+&lt;div&gt;
+  &lt;ul behavior=&quot;cool-carousel&quot;&gt;
+    &lt;li&gt;&lt;img src=&quot;/assets/image1&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src=&quot;/assets/image2&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src=&quot;/assets/image3&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src=&quot;/assets/image4&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src=&quot;/assets/image5&quot;&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+            </code>
+          </pre>
+        </div>
+    </section>
+  </div>
+      </div>
+
+<div class="container clearfix">
+  <section class="column half-width">
+    <h2 class="section-title">Testing</h2>
+    <p>
+      Due to the module-oriented nature of essential, it's really easy to
+      write tests.
+    </p>
+    <p>
+      This example uses mocha, but you can use any test framework that
+      you like.
+    </p>
+    <div class="tabbed-container" behavior="tabbed-container">
+      <ul class="clearfix">
+        <li class="tab-header active" data-content="js"><a href="#">JS</a></li>
+      </ul>
+      <div class="tab-content active" data-name="js">
+        <pre behavior="code-area">
+          <code>
+describe("CoolCarousel", function() {
+  beforeEach(function(){
+    this.domElement = __html__["cool_carousel.html"];
+  });
+
+  it("....", function(){
+    App.CoolCarousel.new(this.domElement);
+  });
+});
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
+  <section class="column half-width">
+    <h2 class="section-title">Communication</h2>
+    <p>
+      Behaviors can share information and communicate between the DOM Event
+      interface
+    </p>
+    <div class="tabbed-container" behavior="tabbed-container">
+      <ul class="clearfix">
+        <li class="tab-header active" data-content="js"><a href="#">JS</a></li>
+      </ul>
+      <div class="tab-content active" data-name="js">
+        <pre behavior="code-area">
+          <code>
+App.Editor = Essential.Behavior.extend({
+  events: {
+    "keyup": "emitChangedContent"
+  }
+
+  emitChangedContent: function() {
+    var customEvent = new CustomEvent("editor:changed", {
+      "detail": {
+        content: this.el.innerHTML
+      }
+    });
+
+    document.dispatchEvent(customEvent);
+    // or this.el.dispatchEvent(customEvent);
+  }
+});
+          </code>
+        </pre>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+</footer>
+
+<script src="javascripts/essential.js"></script>
 <script src="javascripts/highlight.js"></script>
 <script src="javascripts/main.js"></script>
-<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
   (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
     function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
