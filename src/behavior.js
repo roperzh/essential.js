@@ -45,6 +45,7 @@ Essential.Behavior = Proto.extend({
     //
     // carousel.start();
     // // delegateEvents and init called
+    // ```
 
     if(!lateStart) {
       this.start();
