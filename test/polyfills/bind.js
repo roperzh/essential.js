@@ -2,7 +2,6 @@ var isFunction = function(o) {
   return typeof o == 'function';
 };
 
-
 var bind,
   slice = [].slice,
   proto = Function.prototype,
@@ -18,14 +17,13 @@ function has(feature) {
 }
 
 // check for missing features
-if (!has('function-bind')) {
+if(!has('function-bind')) {
   // adapted from Mozilla Developer Network example at
   // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
   bind = function bind(obj) {
     var args = slice.call(arguments, 1),
       self = this,
-      nop = function() {
-      },
+      nop = function() {},
       bound = function() {
         return self.apply(this instanceof nop ? this : (obj || {}), args.concat(slice.call(arguments)));
       };
