@@ -1,4 +1,4 @@
-//     EssentialJS v0.1.0
+//     EssentialJS v0.3.0
 //     Copyright (c)2014 Roberto Dip
 //     Distributed under MIT license
 //     http://roperzh.github.io/essential.js
@@ -28,25 +28,42 @@ window.Essential = {
   // // will attach the carousel behavior to proper elements
   // ```
 
-  start: function (application) {
-    var crawledContent = this.Core.crawl(this.rootElement),
-      rawBehaviorsNames = Object.keys(crawledContent),
+  start: function(application) {
+    var initializedBehaviors = this.initializeBehaviors(application);
+    this.launchBehaviors(initializedBehaviors);
+  },
+
+  initializeBehaviors: function(application) {
+    var behaviorsInDOM = this.Core.crawl(this.rootElement),
+      rawBehaviorsNames = Object.keys(behaviorsInDOM),
+      initializedBehaviors = [],
       i = -1;
 
-    while (rawBehaviorsNames[++i]) {
+    while(rawBehaviorsNames[++i]) {
       var rawName = rawBehaviorsNames[i],
         name = this.Core.camelize(rawName),
         behavior = application[name];
 
-      if (typeof behavior !== "undefined") {
-        var behaviorsList = crawledContent[rawName],
+      if(typeof behavior !== "undefined") {
+        var elementsWithBehavior = behaviorsInDOM[rawName],
           j = -1;
 
-        while(behaviorsList[++j]) {
-          behavior.new(behaviorsList[j]);
+        while(elementsWithBehavior[++j]) {
+          var initializedBehavior = behavior.new(elementsWithBehavior[j], true);
+          initializedBehaviors.push(initializedBehavior);
         }
       }
+    }
 
+    return initializedBehaviors;
+  },
+
+  launchBehaviors: function(behaviorList) {
+    var sortedBehaviors = behaviorList.sort(this.Core.SortMethods.byPriority),
+      i = -1;
+
+    while(sortedBehaviors[++i]) {
+      sortedBehaviors[i].start();
     }
   }
 };
@@ -90,11 +107,14 @@ Function.prototype.extend = function (subProps) {
 // --------
 //
 // Represents a behavior of some element or group of elements.
-// The objetive is define a set of rules and events who
+// The objetive is define a set of rules and events which
 // can be associated to an element and reutilized later on
 //
 // When a behavior is defined, a hash of events must be defined too,
 // and on initialization a DOM element must be provided
+//
+// Also you can define an `init` function, which is always called when the
+// behavior is initialized
 //
 // **Example**
 // ```javascript
@@ -102,6 +122,10 @@ Function.prototype.extend = function (subProps) {
 //   events: {
 //     "click .next": "goToNextSlide"
 //   },
+//
+//  init: function() {
+//    // Called on behavior initialization
+//  },
 //
 //   goToNextSlide: function(e) {
 //     //...
@@ -112,22 +136,42 @@ Function.prototype.extend = function (subProps) {
 // ```
 
 Essential.Behavior = Proto.extend({
-  constructor: function (domElement) {
+  constructor: function(domElement, lateStart) {
     this.el = domElement;
+
+    // A behavior can be initialized without attaching events with the `lateStart`
+    // flag, if it is present the methods `delegateEvents` and `ìnit` are omitted
+    // but can be called later with `start`
+    //
+    // **Example**
+    // ```javascript
+    // carousel = new Carousel(domElement, true);
+    // // delegateEvents and init not called
+    //
+    // carousel.start();
+    // // delegateEvents and init called
+
+    if(!lateStart) {
+      this.start();
+    }
+  },
+
+  start: function() {
     this.delegateEvents();
-    if (typeof this.init === "function") {
+
+    if(typeof this.init === "function") {
       this.init();
     }
   },
 
-  delegateEvents: function () {
-    if (typeof this.events === "undefined") {
+  delegateEvents: function() {
+    if(typeof this.events === "undefined") {
       return;
     }
 
     var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
-    for (var key in this.events) {
+    for(var key in this.events) {
       var method = this.events[key];
 
       var match = key.match(delegateEventSplitter);
@@ -135,13 +179,15 @@ Essential.Behavior = Proto.extend({
         selector = match[2],
         nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
 
-      if (typeof this[method] === "undefined") {
+      if(typeof this[method] === "undefined") {
         continue;
       }
 
-      Essential.Core.bind(eventName, nodeList, this[method]);
+      Essential.Core.bind(eventName, nodeList, this[method].bind(this));
     }
-  }
+  },
+
+  priority: 0
 });
 // Bind
 // ----
@@ -167,13 +213,13 @@ Essential.Behavior = Proto.extend({
 // // elements in the nodeList the alert will appear
 // ```
 
-Essential.Core.bind = function (eventName, nodeList, callback) {
+Essential.Core.bind = function(eventName, nodeList, callback) {
   var i = -1;
 
-  while (nodeList[++i]) {
+  while(nodeList[++i]) {
     var currentElement = nodeList[i];
 
-    if (currentElement.addEventListener) {
+    if(currentElement.addEventListener) {
       nodeList[i].addEventListener(eventName, callback);
     } else {
       currentElement.attachEvent("on" + eventName, callback);
@@ -209,12 +255,12 @@ Essential.Core.FIRST_LETTER_REGEXP = /^[a-z]/g;
 // // => CoolCarousel
 // ```
 
-Essential.Core.camelize = function (name) {
+Essential.Core.camelize = function(name) {
   return name.
-  replace(Essential.Core.FIRST_LETTER_REGEXP, function (letter) {
+  replace(Essential.Core.FIRST_LETTER_REGEXP, function(letter) {
     return letter.toUpperCase();
   }).
-  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function (_, separator, letter) {
+  replace(Essential.Core.SPECIAL_CHARS_REGEXP, function(_, separator, letter) {
     return letter.toUpperCase();
   });
 };
@@ -243,16 +289,16 @@ Essential.Core.crawl = function(rootElement) {
     i = -1,
     result = {};
 
-  while (all[++i]) {
+  while(all[++i]) {
     var currentElement = all[i],
       rawBehaviors = currentElement.getAttribute("data-behavior") || currentElement.getAttribute("behavior"),
       behaviorsList = rawBehaviors.split(" "),
       j = -1;
 
-    while (behaviorsList[++j]) {
+    while(behaviorsList[++j]) {
       var currentBehavior = behaviorsList[j];
 
-      if (result[currentBehavior]) {
+      if(result[currentBehavior]) {
         result[currentBehavior].push(currentElement);
       } else {
         result[currentBehavior] = [currentElement];
