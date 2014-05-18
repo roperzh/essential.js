@@ -50,6 +50,19 @@ describe("Essential.Behavior", function() {
       it("pass off if an event in the hash is not defined", function() {
         expect(this.behavior).to.be.ok;
       });
+
+      it("must ensure that the callback function has the behavior itself as a context", function() {
+        var context;
+        var ContextTestBehavior = customBehavior.extend({
+          clickHandler: function() {
+            context = this;
+          }
+        });
+
+        contextTestBehavior = ContextTestBehavior.new(this.domElement);
+        this.domElement.dispatchEvent(Events.click());
+        expect(context).to.be.equal(contextTestBehavior);
+      });
     });
 
     context("without a hash of events", function() {

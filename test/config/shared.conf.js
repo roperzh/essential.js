@@ -13,6 +13,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'test/polyfills/*.js',
       'lib/*.js',
       'src/main.js',
       'src/core/*.js',
