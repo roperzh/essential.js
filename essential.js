@@ -1,4 +1,4 @@
-//     EssentialJS v0.3.0
+//     EssentialJS v0.4.0
 //     Copyright (c)2014 Roberto Dip
 //     Distributed under MIT license
 //     http://roperzh.github.io/essential.js
@@ -150,6 +150,7 @@ Essential.Behavior = Proto.extend({
     //
     // carousel.start();
     // // delegateEvents and init called
+    // ```
 
     if(!lateStart) {
       this.start();
@@ -307,4 +308,22 @@ Essential.Core.crawl = function(rootElement) {
   }
 
   return result;
+};
+// Sort Methods
+// ------------
+//
+// Namespace to hold sort methods
+
+Essential.Core.SortMethods = {
+
+  // By Priority
+  // -----------
+  //
+  // This criteria allows to sort behaviors based on their respective priorities,
+  // in descending order, that means behaviors with bigger priority will appear
+  // first
+
+  byPriority: function(behaviorA, behaviorB) {
+    return behaviorB.priority - behaviorA.priority;
+  }
 };
