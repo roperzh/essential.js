@@ -1,6 +1,6 @@
 {
   "name": "essential.js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Modular and lightweight JavaScript framework",
   "main": "essential.js",
   "directories": {
