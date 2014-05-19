@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <pre><code>EssentialJS v0<span class="hljs-number">.3</span><span class="hljs-number">.0</span>
+              <pre><code>EssentialJS v0<span class="hljs-number">.4</span><span class="hljs-number">.0</span>
 Copyright (c)<span class="hljs-number">2014</span> Roberto Dip
 Distributed under MIT license
 http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
@@ -184,12 +184,13 @@ Essential.Behavior = Proto.extend({
               <p>A behavior can be initialized without attaching events with the <code>lateStart</code>
 flag, if it is present the methods <code>delegateEvents</code> and <code>ìnit</code> are omitted
 but can be called later with <code>start</code></p>
-<p><strong>Example</strong>
-```javascript
-carousel = new Carousel(domElement, true);
-// delegateEvents and init not called</p>
-<p>carousel.start();
-// delegateEvents and init called</p>
+<p><strong>Example</strong></p>
+<pre><code class="lang-javascript">carousel = <span class="hljs-keyword">new</span> Carousel(domElement, <span class="hljs-literal">true</span>);
+<span class="hljs-comment">// delegateEvents and init not called</span>
+
+carousel.start();
+<span class="hljs-comment">// delegateEvents and init called</span>
+</code></pre>
 
             </div>
 
@@ -448,6 +449,69 @@ Essential.Core.crawl = <span class="hljs-function"><span class="hljs-keyword">fu
   }
 
   <span class="hljs-keyword">return</span> result;
+};</pre></div></div>
+
+        </li>
+
+
+        <li id="section-17">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h2 id="sort-methods">Sort Methods</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-18">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Namespace to hold sort methods</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+Essential.Core.SortMethods = {</pre></div></div>
+
+        </li>
+
+
+        <li id="section-19">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h2 id="by-priority">By Priority</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-20">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>This criteria allows to sort behaviors based on their respective priorities,
+in descending order, that means behaviors with bigger priority will appear
+first</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+  byPriority: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(behaviorA, behaviorB)</span> {</span>
+    <span class="hljs-keyword">return</span> behaviorB.priority - behaviorA.priority;
+  }
 };</pre></div></div>
 
         </li>
