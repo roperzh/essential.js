@@ -13,8 +13,10 @@
   "keywords": [
     "essential",
     "framework",
+    "microframework",
     "behavior",
-    "behaviors"
+    "behaviors",
+    "essentialjs"
   ],
   "license": "MIT",
   "ignore": [
