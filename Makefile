@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-SOURCE_FILES=src/behavior.js src/core/{bind,camelize,crawl}.js
+SOURCE_FILES=src/behavior.js src/core/{bind,camelize,crawl,sort_methods}.js
 
 test:
 	./node_modules/karma/bin/karma start test/config/basic.conf.js
