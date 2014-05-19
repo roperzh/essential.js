@@ -58,7 +58,7 @@
   <div class="separator"><h5>Overview</h5></div>
   <section class="column half-width">
     <p>An Essential application is built with modules called <span class="code-snippet">behaviors</span></p>
-    <p>Every behavior describes an specific functionality of your application</p>
+    <p>Every behavior describes a specific functionality of your application</p>
     <p>You can nest behaviors, initialize behaviors inside others, and share logic
     between them. They are designed to be fast and testable entities.</p>
     <p>The box on the rigth is an example of a behavior in action</p>
@@ -122,7 +122,7 @@ Essential.start(Page);
     <h2 class="section-title">Initialization</h2>
     <p>Once you have defined your behaviors there are two ways to attach a behavior to a DOM element:</p>
     <p>
-       - Define a <span class="code-snippet">data-behavior</span> attribute in the element
+       - Define a <span class="code-snippet">data-behavior</span> attribute for the element
       with the associated behavior, Essential will automatically start a new behavior with
       the element accesible through the <span class="code-snippet">el</span> property.
     </p>
@@ -161,7 +161,7 @@ App.MyBehavior.new(domElement);
   <section class="column half-width">
     <h2 class="section-title">Inheritance</h2>
     <p>
-      You can define behaviors based in other behaviors with the <span class="code-snippet">extend</span>
+      You can define behaviors based on other behaviors with the <span class="code-snippet">extend</span>
       method
     </p>
     <div class="tabbed-container" behavior="tabbed-container">
@@ -211,8 +211,7 @@ App.CoolCarousel = App.StandardCarousel.extend({
       write tests.
     </p>
     <p>
-      This example uses mocha, but you can use any test framework that
-      you like.
+      This example uses mocha, but you can use any test framework you like.
     </p>
     <div class="tabbed-container" behavior="tabbed-container">
       <ul class="clearfix">
@@ -238,8 +237,8 @@ describe("CoolCarousel", function() {
   <section class="column half-width">
     <h2 class="section-title">Communication</h2>
     <p>
-      Behaviors can share information and communicate between the DOM Event
-      interface
+      Behaviors can share information and communicate among themselves through
+      the DOM Event interface
     </p>
     <div class="tabbed-container" behavior="tabbed-container">
       <ul class="clearfix">
