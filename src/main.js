@@ -12,29 +12,54 @@ window.Essential = {
   // Start
   // -----
   //
+  // since v0.1.0
+  //
+  // A wrapper of  `#Essential.loadBehaviors`, this method is deprecated
+  // direct usage of `loadBehaviors` is encouraged.
+  //
+  // Param application[`Object`] an object containing behaviors names as a key
+  // and behaviors objects as a value.
+
+  start: function(application) {
+    this.loadBehaviors({
+      application: application
+    });
+  },
+
+  // Load Behaviors
+  // --------------
+  //
+  // since v0.5.0
+  //
   // Wakes up the engine, searching and attaching
   // behaviors with their proper elements
   //
-  // Param application[`Object`] an object containing
-  // behaviors names as a key and behaviors objects
-  // as a value
+  // Param options[`Object`] allows the follwing values:
+  //  - `application`[`Object`] an object containing behaviors names as a key
+  //    and behaviors objects as a value
+  //  - `context` [`DOMElement`] context to look for behaviors.
+  //     If no context is provided the default is `Essential.rootElement`
   //
   // **Example**
   //
   // ```javascript
   // MyApp = {};
   // MyApp.Carousel = Essential.Behaviors.extend();
-  // Essential.start(MyApp);
+  // Essential.loadBehaviors({ application: MyApp, context: document });
   // // will attach the carousel behavior to proper elements
   // ```
 
-  start: function(application) {
-    var initializedBehaviors = this.initializeBehaviors(application);
+  loadBehaviors: function(options) {
+    options.context = options.context || this.rootElement;
+
+    var initializedBehaviors =
+      this.initializeBehaviors(options.application, options.context);
+
     this.launchBehaviors(initializedBehaviors);
   },
 
-  initializeBehaviors: function(application) {
-    var behaviorsInDOM = this.Core.crawl(this.rootElement),
+  initializeBehaviors: function(application, element) {
+    var behaviorsInDOM = this.Core.crawl(element),
       rawBehaviorsNames = Object.keys(behaviorsInDOM),
       initializedBehaviors = [],
       i = -1;
