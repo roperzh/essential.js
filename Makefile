@@ -1,5 +1,6 @@
 SHELL=/bin/bash
-SOURCE_FILES=src/behavior.js src/core/{bind,camelize,crawl,sort_methods}.js
+SOURCE_FILES=src/behavior.js src/core/{map_events,bind,camelize,crawl,sort_methods}.js
+VENDOR_FILES=lib/{proto,polyfills}.js
 
 test:
 	./node_modules/karma/bin/karma start test/config/basic.conf.js
@@ -15,7 +16,7 @@ doc:
 	rm -rf docs/essential.js
 
 build:
-	cat src/main.js lib/proto.js ${SOURCE_FILES}  > essential.js
+	cat src/main.js ${VENDOR_FILES} ${SOURCE_FILES}  > essential.js
 
 min:
 	./node_modules/uglify-js/bin/uglifyjs --comments "/     [a-z]/i" -m < essential.js > essential.min.js

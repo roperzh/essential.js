@@ -54,33 +54,74 @@ Essential.Behavior = Proto.extend({
 
   start: function() {
     this.delegateEvents();
+    this.listenChannels();
 
     if(typeof this.init === "function") {
       this.init();
     }
   },
 
+  // Delegate Events
+  // ---------------
+  //
+  // since v0.1.0
+  //
+  // Delegates events declared in `this.events`, using `this.el` as a context
+
   delegateEvents: function() {
-    if(typeof this.events === "undefined") {
-      return;
-    }
+    Essential.Core.mapEvents.call(this, this.events, this.el);
+  },
 
-    var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+  // Listen Channels
+  // ---------------
+  //
+  // since v0.5.0
+  //
+  // Attach event handlers to channels declared in `this.channels using
+  // `document` as a context
 
-    for(var key in this.events) {
-      var method = this.events[key];
+  listenChannels: function() {
+    Essential.Core.mapEvents.call(this, this.channels, document);
+  },
 
-      var match = key.match(delegateEventSplitter);
-      var eventName = match[1],
-        selector = match[2],
-        nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
+  // Emit
+  // ----
+  //
+  // Facilitates the emission of custom events through the CustomEvent
+  // Interface. IE9 and IE10 are supported via polyfill
+  //
+  // since v0.5.0
+  //
+  // param dataset[`Object`] valid dataset values are:
+  //
+  //   - channel: [`String`] name (identifier) of the channel
+  //
+  //   - context: [`DOMElement`] DOM context in which the event is triggered,
+  //      this parameter can be ommited. Default value is `document`
+  //
+  //   - bubles: [`Boolean`] defines if this event should bubble or not,
+  //     defaults to true
+  //
+  //   - cancelable: [`Boolean`] indecates whether the event is cancelable,
+  //     defaults to false
+  //
+  //   - data: [`Object`] data to be included in the `"detail"` key of the
+  //      event can be accesed later via `event.detail`
+  //      (check the CustomEvent spec for more info)
 
-      if(typeof this[method] === "undefined") {
-        continue;
-      }
+  emit: function(dataset) {
+    dataset.context = dataset.context || this.el;
+    dataset.data = dataset.data || {};
+    dataset.bubbles = dataset.bubbles || true;
+    dataset.cancelable = dataset.cancelable || false;
 
-      Essential.Core.bind(eventName, nodeList, this[method].bind(this));
-    }
+    var customEvent = new CustomEvent(dataset.channel, {
+      "bubbles": dataset.bubbles,
+      "cancelable": dataset.cancelable,
+      "detail": dataset.data
+    });
+
+    dataset.context.dispatchEvent(customEvent);
   },
 
   priority: 0
