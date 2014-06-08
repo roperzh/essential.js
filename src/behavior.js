@@ -64,6 +64,8 @@ Essential.Behavior = Proto.extend({
   // Delegate Events
   // ---------------
   //
+  // since v0.1.0
+  //
   // Delegates events declared in `this.events`, using `this.el` as a context
 
   delegateEvents: function() {
@@ -72,6 +74,8 @@ Essential.Behavior = Proto.extend({
 
   // Listen Channels
   // ---------------
+  //
+  // since v0.5.0
   //
   // Attach event handlers to channels declared in `this.channels using
   // `document` as a context
