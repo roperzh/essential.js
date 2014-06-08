@@ -54,6 +54,7 @@ Essential.Behavior = Proto.extend({
 
   start: function() {
     this.delegateEvents();
+    this.listenChannels();
 
     if(typeof this.init === "function") {
       this.init();
@@ -67,6 +68,16 @@ Essential.Behavior = Proto.extend({
 
   delegateEvents: function() {
     Essential.Core.mapEvents.call(this, this.events, this.el);
+  },
+
+  // Listen Channels
+  // ---------------
+  //
+  // Attach event handlers to channels declared in `this.channels using
+  // `document` as a context
+
+  listenChannels: function() {
+    Essential.Core.mapEvents.call(this, this.channels, document);
   },
 
   priority: 0
