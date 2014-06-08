@@ -60,6 +60,11 @@ Essential.Behavior = Proto.extend({
     }
   },
 
+  // Delegate Events
+  // ---------------
+  //
+  // Delegates events declared in `this.events`, using `this.el` as a context
+
   delegateEvents: function() {
     Essential.Core.mapEvents.call(this, this.events, this.el);
   },
