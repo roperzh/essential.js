@@ -58,6 +58,17 @@ window.Essential = {
     this.launchBehaviors(initializedBehaviors);
   },
 
+  // Initialize Behaviors
+  // --------------------
+  //
+  // Crawls an element looking for behaviors and call `#new` on every behavior
+  // found with `lateStart = true`, so the behaviors are initialized, but
+  // there is no event delegation
+  //
+  // param application [`Object`] object containing behaviors to be initialized
+  //
+  // param element [`DomeElement`] context to look for declared behaviors
+
   initializeBehaviors: function(application, element) {
     var behaviorsInDOM = this.Core.crawl(element),
       rawBehaviorsNames = Object.keys(behaviorsInDOM),
@@ -82,6 +93,15 @@ window.Essential = {
 
     return initializedBehaviors;
   },
+
+  // Launch Behaviors
+  // ----------------
+  //
+  // Given a list of behaviors, this method sort these based on their
+  // `priority` value, and then call `#start` on every one
+  //
+  // param behaviorList[`Array<Object>`] an array containing behaviors already
+  // initialized
 
   launchBehaviors: function(behaviorList) {
     var sortedBehaviors = behaviorList.sort(this.Core.SortMethods.byPriority),
