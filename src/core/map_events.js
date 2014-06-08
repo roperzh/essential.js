@@ -25,7 +25,6 @@
 // Essential.Core.mapEvents(events, document);
 // ```
 
-
 Essential.Core.mapEvents = function(events, context) {
   if(typeof events === "undefined") {
     return;

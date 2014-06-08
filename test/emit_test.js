@@ -20,7 +20,6 @@ describe("Essential.Behavior#emit", function() {
       Essential.start(App);
     });
 
-
     it("emits a custom event with the specified data, in the specified context", function() {
       var el = document.getElementById("menu");
       var b = customBehavior.new(el);
