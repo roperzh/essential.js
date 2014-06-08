@@ -21,9 +21,11 @@ describe("Essential.Core#mapEvents", function() {
       var events = {
         "change:flag": "setFlag"
       };
-      var customEvent = new CustomEvent("change:flag", {});
-      Essential.Core.mapEvents.call(this, events, document);
-      document.dispatchEvent(customEvent);
+      var customEvent = new CustomEvent("change:flag", {}),
+          element = document.getElementById("carousel");
+
+      Essential.Core.mapEvents.call(this, events, element);
+      element.dispatchEvent(customEvent);
 
       expect(Helper.flag).to.be.eql(1);
     });
