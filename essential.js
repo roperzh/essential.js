@@ -1,4 +1,4 @@
-//     EssentialJS v0.4.0
+//     EssentialJS v0.5.0
 //     Copyright (c)2014 Roberto Dip
 //     Distributed under MIT license
 //     http://roperzh.github.io/essential.js
@@ -12,29 +12,65 @@ window.Essential = {
   // Start
   // -----
   //
+  // since v0.1.0
+  //
+  // A wrapper of  `#Essential.loadBehaviors`, this method is deprecated
+  // direct usage of `loadBehaviors` is encouraged.
+  //
+  // Param application[`Object`] an object containing behaviors names as a key
+  // and behaviors objects as a value.
+
+  start: function(application) {
+    this.loadBehaviors({
+      application: application
+    });
+  },
+
+  // Load Behaviors
+  // --------------
+  //
+  // since v0.5.0
+  //
   // Wakes up the engine, searching and attaching
   // behaviors with their proper elements
   //
-  // Param application[`Object`] an object containing
-  // behaviors names as a key and behaviors objects
-  // as a value
+  // Param options[`Object`] allows the follwing values:
+  //  - `application`[`Object`] an object containing behaviors names as a key
+  //    and behaviors objects as a value
+  //  - `context` [`DOMElement`] context to look for behaviors.
+  //     If no context is provided the default is `Essential.rootElement`
   //
   // **Example**
   //
   // ```javascript
   // MyApp = {};
   // MyApp.Carousel = Essential.Behaviors.extend();
-  // Essential.start(MyApp);
+  // Essential.loadBehaviors({ application: MyApp, context: document });
   // // will attach the carousel behavior to proper elements
   // ```
 
-  start: function(application) {
-    var initializedBehaviors = this.initializeBehaviors(application);
+  loadBehaviors: function(options) {
+    options.context = options.context || this.rootElement;
+
+    var initializedBehaviors =
+      this.initializeBehaviors(options.application, options.context);
+
     this.launchBehaviors(initializedBehaviors);
   },
 
-  initializeBehaviors: function(application) {
-    var behaviorsInDOM = this.Core.crawl(this.rootElement),
+  // Initialize Behaviors
+  // --------------------
+  //
+  // Crawls an element looking for behaviors and call `#new` on every behavior
+  // found with `lateStart = true`, so the behaviors are initialized, but
+  // there is no event delegation
+  //
+  // param application [`Object`] object containing behaviors to be initialized
+  //
+  // param element [`DomeElement`] context to look for declared behaviors
+
+  initializeBehaviors: function(application, element) {
+    var behaviorsInDOM = this.Core.crawl(element),
       rawBehaviorsNames = Object.keys(behaviorsInDOM),
       initializedBehaviors = [],
       i = -1;
@@ -57,6 +93,15 @@ window.Essential = {
 
     return initializedBehaviors;
   },
+
+  // Launch Behaviors
+  // ----------------
+  //
+  // Given a list of behaviors, this method sort these based on their
+  // `priority` value, and then call `#start` on every one
+  //
+  // param behaviorList[`Array<Object>`] an array containing behaviors already
+  // initialized
 
   launchBehaviors: function(behaviorList) {
     var sortedBehaviors = behaviorList.sort(this.Core.SortMethods.byPriority),
@@ -103,6 +148,25 @@ Function.prototype.extend = function (subProps) {
   var tmpClass = Proto.extend.call(constrFunc.prototype, Proto);
   return tmpClass.extend(subProps);
 };
+// Custom Event Polyfill
+// ---------------------
+//
+// since 0.5.0
+//
+// source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent
+//
+// Allows the usage of custom events on IE 9 - 10
+
+function CustomEvent ( event, params ) {
+  params = params || { bubbles: false, cancelable: false, detail: undefined };
+  var evt = document.createEvent( 'CustomEvent' );
+  evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+  return evt;
+ };
+
+CustomEvent.prototype = window.Event.prototype;
+
+window.CustomEvent = CustomEvent;
 // Behavior
 // --------
 //
@@ -159,37 +223,127 @@ Essential.Behavior = Proto.extend({
 
   start: function() {
     this.delegateEvents();
+    this.listenChannels();
 
     if(typeof this.init === "function") {
       this.init();
     }
   },
 
+  // Delegate Events
+  // ---------------
+  //
+  // since v0.1.0
+  //
+  // Delegates events declared in `this.events`, using `this.el` as a context
+
   delegateEvents: function() {
-    if(typeof this.events === "undefined") {
-      return;
-    }
+    Essential.Core.mapEvents.call(this, this.events, this.el);
+  },
 
-    var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+  // Listen Channels
+  // ---------------
+  //
+  // since v0.5.0
+  //
+  // Attach event handlers to channels declared in `this.channels using
+  // `document` as a context
 
-    for(var key in this.events) {
-      var method = this.events[key];
+  listenChannels: function() {
+    Essential.Core.mapEvents.call(this, this.channels, document);
+  },
 
-      var match = key.match(delegateEventSplitter);
-      var eventName = match[1],
-        selector = match[2],
-        nodeList = selector ? this.el.querySelectorAll(selector) : [this.el];
+  // Emit
+  // ----
+  //
+  // Facilitates the emission of custom events through the CustomEvent
+  // Interface. IE9 and IE10 are supported via polyfill
+  //
+  // since v0.5.0
+  //
+  // param dataset[`Object`] valid dataset values are:
+  //
+  //   - channel: [`String`] name (identifier) of the channel
+  //
+  //   - context: [`DOMElement`] DOM context in which the event is triggered,
+  //      this parameter can be ommited. Default value is `document`
+  //
+  //   - bubles: [`Boolean`] defines if this event should bubble or not,
+  //     defaults to true
+  //
+  //   - cancelable: [`Boolean`] indecates whether the event is cancelable,
+  //     defaults to false
+  //
+  //   - data: [`Object`] data to be included in the `"detail"` key of the
+  //      event can be accesed later via `event.detail`
+  //      (check the CustomEvent spec for more info)
 
-      if(typeof this[method] === "undefined") {
-        continue;
-      }
+  emit: function(dataset) {
+    dataset.context = dataset.context || this.el;
+    dataset.data = dataset.data || {};
+    dataset.bubbles = dataset.bubbles || true;
+    dataset.cancelable = dataset.cancelable || false;
 
-      Essential.Core.bind(eventName, nodeList, this[method].bind(this));
-    }
+    var customEvent = new CustomEvent(dataset.channel, {
+      "bubbles": dataset.bubbles,
+      "cancelable": dataset.cancelable,
+      "detail": dataset.data
+    });
+
+    dataset.context.dispatchEvent(customEvent);
   },
 
   priority: 0
 });
+// Map Events
+// ----------
+//
+// since v0.5.0
+//
+// Given a document context, maps a hash of events to all ocurrences
+// in the context using the DOM Event Interface
+//
+// param events[`Object`] key-value map which follows some conventions:
+//
+//   - key: must be a String, containing the event name. Optionally after the event
+//     name a valid CSS selector must be placed, for example `"click #element"`
+//
+//   - value: must be a name of a funciton pertaining to the current in which
+//     `mapEvents` its executed
+//
+// param context[`DOMElement`] element to search through
+//
+// **Example**
+// ```javascript
+// var events = {
+//   "click .next": "goToNextSlide"
+// };
+//
+// Essential.Core.mapEvents(events, document);
+// ```
+
+Essential.Core.mapEvents = function(events, context) {
+  if(typeof events === "undefined") {
+    return;
+  }
+
+  var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+
+  for(var key in events) {
+    var method = events[key];
+
+    var match = key.match(delegateEventSplitter);
+    var eventName = match[1],
+      selector = match[2],
+      nodeList = selector ? context.querySelectorAll(selector) : [context];
+
+    if(typeof this[method] === "undefined") {
+      continue;
+    }
+
+    Essential.Core.bind(eventName, nodeList, this[method].bind(this));
+  }
+};
 // Bind
 // ----
 //
