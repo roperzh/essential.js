@@ -9,7 +9,7 @@ test-ci:
 	./node_modules/karma/bin/karma start test/config/ci.conf.js
 
 doc:
-	mkdir docs
+	mkdir -p docs
 	cat src/main.js ${SOURCE_FILES} > docs/essential.js
 	./node_modules/docco/bin/docco docs/essential.js
 	mv docs/essential.html docs/index.html
