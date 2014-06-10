@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <pre><code>EssentialJS v0<span class="hljs-number">.4</span><span class="hljs-number">.0</span>
+              <pre><code>EssentialJS v0<span class="hljs-number">.5</span><span class="hljs-number">.0</span>
 Copyright (c)<span class="hljs-number">2014</span> Roberto Dip
 Distributed under MIT license
 http:<span class="hljs-comment">//roperzh.github.io/essential.js</span>
@@ -63,28 +63,105 @@ window.Essential = {
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Wakes up the engine, searching and attaching
+              <p>since v0.1.0</p>
+<p>A wrapper of  <code>#Essential.loadBehaviors</code>, this method is deprecated
+direct usage of <code>loadBehaviors</code> is encouraged.</p>
+<p>Param application[<code>Object</code>] an object containing behaviors names as a key
+and behaviors objects as a value.</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+  start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(application)</span> {</span>
+    <span class="hljs-keyword">this</span>.loadBehaviors({
+      application: application
+    });
+  },</pre></div></div>
+
+        </li>
+
+
+        <li id="section-4">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="load-behaviors">Load Behaviors</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-5">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>since v0.5.0</p>
+<p>Wakes up the engine, searching and attaching
 behaviors with their proper elements</p>
-<p>Param application[<code>Object</code>] an object containing
-behaviors names as a key and behaviors objects
-as a value</p>
+<p>Param options[<code>Object</code>] allows the follwing values:</p>
+<ul>
+<li><code>application</code>[<code>Object</code>] an object containing behaviors names as a key
+and behaviors objects as a value</li>
+<li><code>context</code> [<code>DOMElement</code>] context to look for behaviors.
+ If no context is provided the default is <code>Essential.rootElement</code></li>
+</ul>
 <p><strong>Example</strong></p>
 <pre><code class="lang-javascript">MyApp = {};
 MyApp.Carousel = Essential.Behaviors.extend();
-Essential.start(MyApp);
+Essential.loadBehaviors({ application: MyApp, context: document });
 <span class="hljs-comment">// will attach the carousel behavior to proper elements</span>
 </code></pre>
 
             </div>
 
             <div class="content"><div class='highlight'><pre>
-  start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(application)</span> {</span>
-    <span class="hljs-keyword">var</span> initializedBehaviors = <span class="hljs-keyword">this</span>.initializeBehaviors(application);
-    <span class="hljs-keyword">this</span>.launchBehaviors(initializedBehaviors);
-  },
+  loadBehaviors: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span>
+    options.context = options.context || <span class="hljs-keyword">this</span>.rootElement;
 
-  initializeBehaviors: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(application)</span> {</span>
-    <span class="hljs-keyword">var</span> behaviorsInDOM = <span class="hljs-keyword">this</span>.Core.crawl(<span class="hljs-keyword">this</span>.rootElement),
+    <span class="hljs-keyword">var</span> initializedBehaviors =
+      <span class="hljs-keyword">this</span>.initializeBehaviors(options.application, options.context);
+
+    <span class="hljs-keyword">this</span>.launchBehaviors(initializedBehaviors);
+  },</pre></div></div>
+
+        </li>
+
+
+        <li id="section-6">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h2 id="initialize-behaviors">Initialize Behaviors</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-7">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Crawls an element looking for behaviors and call <code>#new</code> on every behavior
+found with <code>lateStart = true</code>, so the behaviors are initialized, but
+there is no event delegation</p>
+<p>param application [<code>Object</code>] object containing behaviors to be initialized</p>
+<p>param element [<code>DomeElement</code>] context to look for declared behaviors</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+  initializeBehaviors: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(application, element)</span> {</span>
+    <span class="hljs-keyword">var</span> behaviorsInDOM = <span class="hljs-keyword">this</span>.Core.crawl(element),
       rawBehaviorsNames = <span class="hljs-built_in">Object</span>.keys(behaviorsInDOM),
       initializedBehaviors = [],
       i = -<span class="hljs-number">1</span>;
@@ -106,8 +183,38 @@ Essential.start(MyApp);
     }
 
     <span class="hljs-keyword">return</span> initializedBehaviors;
-  },
+  },</pre></div></div>
 
+        </li>
+
+
+        <li id="section-8">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="launch-behaviors">Launch Behaviors</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-9">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Given a list of behaviors, this method sort these based on their
+<code>priority</code> value, and then call <code>#start</code> on every one</p>
+<p>param behaviorList[<code>Array&lt;Object&gt;</code>] an array containing behaviors already
+initialized</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
   launchBehaviors: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(behaviorList)</span> {</span>
     <span class="hljs-keyword">var</span> sortedBehaviors = behaviorList.sort(<span class="hljs-keyword">this</span>.Core.SortMethods.byPriority),
       i = -<span class="hljs-number">1</span>;
@@ -121,11 +228,11 @@ Essential.start(MyApp);
         </li>
 
 
-        <li id="section-4">
+        <li id="section-10">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <h2 id="behavior">Behavior</h2>
 
@@ -134,11 +241,11 @@ Essential.start(MyApp);
         </li>
 
 
-        <li id="section-5">
+        <li id="section-11">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Represents a behavior of some element or group of elements.
 The objetive is define a set of rules and events which
@@ -175,11 +282,11 @@ Essential.Behavior = Proto.extend({
         </li>
 
 
-        <li id="section-6">
+        <li id="section-12">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>A behavior can be initialized without attaching events with the <code>lateStart</code>
 flag, if it is present the methods <code>delegateEvents</code> and <code>ìnit</code> are omitted
@@ -202,33 +309,137 @@ carousel.start();
 
   start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     <span class="hljs-keyword">this</span>.delegateEvents();
+    <span class="hljs-keyword">this</span>.listenChannels();
 
     <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>.init === <span class="hljs-string">"function"</span>) {
       <span class="hljs-keyword">this</span>.init();
     }
-  },
+  },</pre></div></div>
 
+        </li>
+
+
+        <li id="section-13">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h2 id="delegate-events">Delegate Events</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-14">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>since v0.1.0</p>
+<p>Delegates events declared in <code>this.events</code>, using <code>this.el</code> as a context</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
   delegateEvents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>.events === <span class="hljs-string">"undefined"</span>) {
-      <span class="hljs-keyword">return</span>;
-    }
+    Essential.Core.mapEvents.call(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.events, <span class="hljs-keyword">this</span>.el);
+  },</pre></div></div>
 
-    <span class="hljs-keyword">var</span> delegateEventSplitter = <span class="hljs-regexp">/^(\S+)\s*(.*)$/</span>;
+        </li>
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.events) {
-      <span class="hljs-keyword">var</span> method = <span class="hljs-keyword">this</span>.events[key];
 
-      <span class="hljs-keyword">var</span> match = key.match(delegateEventSplitter);
-      <span class="hljs-keyword">var</span> eventName = match[<span class="hljs-number">1</span>],
-        selector = match[<span class="hljs-number">2</span>],
-        nodeList = selector ? <span class="hljs-keyword">this</span>.el.querySelectorAll(selector) : [<span class="hljs-keyword">this</span>.el];
+        <li id="section-15">
+            <div class="annotation">
 
-      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>[method] === <span class="hljs-string">"undefined"</span>) {
-        <span class="hljs-keyword">continue</span>;
-      }
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h2 id="listen-channels">Listen Channels</h2>
 
-      Essential.Core.bind(eventName, nodeList, <span class="hljs-keyword">this</span>[method].bind(<span class="hljs-keyword">this</span>));
-    }
+            </div>
+
+        </li>
+
+
+        <li id="section-16">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>since v0.5.0</p>
+<p>Attach event handlers to channels declared in <code>this.channels using</code>document` as a context</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+  listenChannels: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    Essential.Core.mapEvents.call(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.channels, document);
+  },</pre></div></div>
+
+        </li>
+
+
+        <li id="section-17">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h2 id="emit">Emit</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-18">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Facilitates the emission of custom events through the CustomEvent
+Interface. IE9 and IE10 are supported via polyfill</p>
+<p>since v0.5.0</p>
+<p>param dataset[<code>Object</code>] valid dataset values are:</p>
+<ul>
+<li><p>channel: [<code>String</code>] name (identifier) of the channel</p>
+</li>
+<li><p>context: [<code>DOMElement</code>] DOM context in which the event is triggered,
+ this parameter can be ommited. Default value is <code>document</code></p>
+</li>
+<li><p>bubles: [<code>Boolean</code>] defines if this event should bubble or not,
+defaults to true</p>
+</li>
+<li><p>cancelable: [<code>Boolean</code>] indecates whether the event is cancelable,
+defaults to false</p>
+</li>
+<li><p>data: [<code>Object</code>] data to be included in the <code>&quot;detail&quot;</code> key of the
+ event can be accesed later via <code>event.detail</code>
+ (check the CustomEvent spec for more info)</p>
+</li>
+</ul>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+  emit: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dataset)</span> {</span>
+    dataset.context = dataset.context || <span class="hljs-keyword">this</span>.el;
+    dataset.data = dataset.data || {};
+    dataset.bubbles = dataset.bubbles || <span class="hljs-literal">true</span>;
+    dataset.cancelable = dataset.cancelable || <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">var</span> customEvent = <span class="hljs-keyword">new</span> CustomEvent(dataset.channel, {
+      <span class="hljs-string">"bubbles"</span>: dataset.bubbles,
+      <span class="hljs-string">"cancelable"</span>: dataset.cancelable,
+      <span class="hljs-string">"detail"</span>: dataset.data
+    });
+
+    dataset.context.dispatchEvent(customEvent);
   },
 
   priority: <span class="hljs-number">0</span>
@@ -237,11 +448,80 @@ carousel.start();
         </li>
 
 
-        <li id="section-7">
+        <li id="section-19">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h2 id="map-events">Map Events</h2>
+
+            </div>
+
+        </li>
+
+
+        <li id="section-20">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>since v0.5.0</p>
+<p>Given a document context, maps a hash of events to all ocurrences
+in the context using the DOM Event Interface</p>
+<p>param events[<code>Object</code>] key-value map which follows some conventions:</p>
+<ul>
+<li><p>key: must be a String, containing the event name. Optionally after the event
+name a valid CSS selector must be placed, for example <code>&quot;click #element&quot;</code></p>
+</li>
+<li><p>value: must be a name of a funciton pertaining to the current in which
+<code>mapEvents</code> its executed</p>
+</li>
+</ul>
+<p>param context[<code>DOMElement</code>] element to search through</p>
+<p><strong>Example</strong></p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> events = {
+  <span class="hljs-string">"click .next"</span>: <span class="hljs-string">"goToNextSlide"</span>
+};
+
+Essential.Core.mapEvents(events, document);
+</code></pre>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>
+Essential.Core.mapEvents = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(events, context)</span> {</span>
+  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> events === <span class="hljs-string">"undefined"</span>) {
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-keyword">var</span> delegateEventSplitter = <span class="hljs-regexp">/^(\S+)\s*(.*)$/</span>;
+
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> events) {
+    <span class="hljs-keyword">var</span> method = events[key];
+
+    <span class="hljs-keyword">var</span> match = key.match(delegateEventSplitter);
+    <span class="hljs-keyword">var</span> eventName = match[<span class="hljs-number">1</span>],
+      selector = match[<span class="hljs-number">2</span>],
+      nodeList = selector ? context.querySelectorAll(selector) : [context];
+
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>[method] === <span class="hljs-string">"undefined"</span>) {
+      <span class="hljs-keyword">continue</span>;
+    }
+
+    Essential.Core.bind(eventName, nodeList, <span class="hljs-keyword">this</span>[method].bind(<span class="hljs-keyword">this</span>));
+  }
+};</pre></div></div>
+
+        </li>
+
+
+        <li id="section-21">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h2 id="bind">Bind</h2>
 
@@ -250,11 +530,11 @@ carousel.start();
         </li>
 
 
-        <li id="section-8">
+        <li id="section-22">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Binds an event to a node</p>
 <p>Param eventName[<code>String</code>] name of the event to be binded</p>
@@ -291,11 +571,11 @@ Essential.Core.bind = <span class="hljs-function"><span class="hljs-keyword">fun
         </li>
 
 
-        <li id="section-9">
+        <li id="section-23">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h2 id="regexp-helpers">RegExp Helpers</h2>
 
@@ -304,11 +584,11 @@ Essential.Core.bind = <span class="hljs-function"><span class="hljs-keyword">fun
         </li>
 
 
-        <li id="section-10">
+        <li id="section-24">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
 
             </div>
@@ -316,11 +596,11 @@ Essential.Core.bind = <span class="hljs-function"><span class="hljs-keyword">fun
         </li>
 
 
-        <li id="section-11">
+        <li id="section-25">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Looks for some of this characters <code>:</code> <code>-</code> <code>_</code> the objetive is allow
 to define behaviors like <code>cool:carousel</code> or <code>small-carousel</code></p>
@@ -333,11 +613,11 @@ Essential.Core.SPECIAL_CHARS_REGEXP = <span class="hljs-regexp">/([\:\-\_]+(.))/
         </li>
 
 
-        <li id="section-12">
+        <li id="section-26">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Finds the first letter of a given string</p>
 
@@ -349,11 +629,11 @@ Essential.Core.FIRST_LETTER_REGEXP = <span class="hljs-regexp">/^[a-z]/g</span>;
         </li>
 
 
-        <li id="section-13">
+        <li id="section-27">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h2 id="camelize">Camelize</h2>
 
@@ -362,11 +642,11 @@ Essential.Core.FIRST_LETTER_REGEXP = <span class="hljs-regexp">/^[a-z]/g</span>;
         </li>
 
 
-        <li id="section-14">
+        <li id="section-28">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Converts strings to UpperCamelCase</p>
 <p>Param name[<code>String</code>] the name to be camelized</p>
@@ -393,11 +673,11 @@ Essential.Core.camelize = <span class="hljs-function"><span class="hljs-keyword"
         </li>
 
 
-        <li id="section-15">
+        <li id="section-29">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="crawl">Crawl</h2>
 
@@ -406,11 +686,11 @@ Essential.Core.camelize = <span class="hljs-function"><span class="hljs-keyword"
         </li>
 
 
-        <li id="section-16">
+        <li id="section-30">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Scans the DOM looking for behaviors</p>
 <p>Return <code>Array&lt;Object&gt;</code> an array of objects with the behavior name as
@@ -454,11 +734,11 @@ Essential.Core.crawl = <span class="hljs-function"><span class="hljs-keyword">fu
         </li>
 
 
-        <li id="section-17">
+        <li id="section-31">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="sort-methods">Sort Methods</h2>
 
@@ -467,11 +747,11 @@ Essential.Core.crawl = <span class="hljs-function"><span class="hljs-keyword">fu
         </li>
 
 
-        <li id="section-18">
+        <li id="section-32">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Namespace to hold sort methods</p>
 
@@ -483,11 +763,11 @@ Essential.Core.SortMethods = {</pre></div></div>
         </li>
 
 
-        <li id="section-19">
+        <li id="section-33">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="by-priority">By Priority</h2>
 
@@ -496,11 +776,11 @@ Essential.Core.SortMethods = {</pre></div></div>
         </li>
 
 
-        <li id="section-20">
+        <li id="section-34">
             <div class="annotation">
 
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>This criteria allows to sort behaviors based on their respective priorities,
 in descending order, that means behaviors with bigger priority will appear
