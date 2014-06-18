@@ -19,7 +19,7 @@
 // ```
 
 Essential.Core.crawl = function(rootElement) {
-  var all = rootElement.querySelectorAll("[data-behavior], [behavior]"),
+  var all = rootElement.querySelectorAll("[data-behavior]:not([data-essential-dirty]), [behavior]:not([data-essential-dirty])"),
     i = -1,
     result = {};
 
@@ -28,6 +28,8 @@ Essential.Core.crawl = function(rootElement) {
       rawBehaviors = currentElement.getAttribute("data-behavior") || currentElement.getAttribute("behavior"),
       behaviorsList = rawBehaviors.split(" "),
       j = -1;
+
+    currentElement.setAttribute('data-essential-dirty', true);
 
     while(behaviorsList[++j]) {
       var currentBehavior = behaviorsList[j];
@@ -39,6 +41,8 @@ Essential.Core.crawl = function(rootElement) {
       }
     }
   }
+
+  this.watch(rootElement);
 
   return result;
 };
