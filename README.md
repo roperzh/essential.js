@@ -9,3 +9,5 @@ Essential is under active development, in the meantime you can check this resour
 - [EssCinema](https://github.com/roperzh/esscinema/)
 
 - [web page examples] (http://roperzh.github.io/essential.js/)
+
+- [Mutation Observers & Essential] (https://gist.github.com/roperzh/5c5059eb1122717863a1)
