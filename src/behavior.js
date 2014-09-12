@@ -31,7 +31,7 @@
 // ```
 
 Essential.Behavior = Proto.extend({
-  constructor: function(domElement, lateStart) {
+  constructor: function(domElement, lateStart, initParams) {
     this.el = domElement;
 
     // A behavior can be initialized without attaching events with the `lateStart`
@@ -48,13 +48,13 @@ Essential.Behavior = Proto.extend({
     // ```
 
     if(!lateStart) {
-      this.start();
+      this.start(initParams);
     }
   },
 
-  start: function() {
+  start: function(initParams) {
     if(typeof this.init === "function") {
-      this.init();
+      this.init(initParams);
     }
 
     this.delegateEvents();

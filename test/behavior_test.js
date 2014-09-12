@@ -91,4 +91,18 @@ describe("Essential.Behavior", function() {
     var behavior = Essential.Behavior.extend({});
     expect(behavior.priority).to.be.eq(0);
   });
+
+  it("mut allow a custom parameter on initialization", function() {
+    var firstFlag = true;
+    var secondFlag = false;
+    var BehaviorWithParam = Essential.Behavior.extend({
+      init: function(firstFlagAsParam) {
+        secondFlag = firstFlagAsParam;
+      }
+    });
+
+    BehaviorWithParam.new(document, false, firstFlag);
+
+    expect(secondFlag).to.be.equal(firstFlag);
+  });
 });
