@@ -71,6 +71,20 @@ describe("Essential.Behavior", function() {
         expect(behavior).to.be.ok;
       });
     });
+
+    it("executes the init function before any bindings", function() {
+      var Behavior = customBehavior.extend({
+        init: function() {
+          this.el.innerHTML = "<li id='created-on-init'></li>";
+        }
+      });
+
+      var instanceBehavior = Behavior.new(this.domElement);
+      var clickTester = document.getElementById("created-on-init");
+      clickTester.dispatchEvent(Events.click());
+
+      expect(Helper.flag).to.not.equal(0);
+    });
   });
 
   it("has a default priority equal to zero", function() {
