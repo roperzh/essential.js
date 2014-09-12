@@ -53,12 +53,12 @@ Essential.Behavior = Proto.extend({
   },
 
   start: function() {
-    this.delegateEvents();
-    this.listenChannels();
-
     if(typeof this.init === "function") {
       this.init();
     }
+
+    this.delegateEvents();
+    this.listenChannels();
   },
 
   // Delegate Events
