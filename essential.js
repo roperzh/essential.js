@@ -1,5 +1,5 @@
-//     EssentialJS v0.5.0
-//     Copyright (c)2014 Roberto Dip
+//     EssentialJS v0.6.0
+//     Copyright (c)2014 - 2016 Roberto Dip
 //     Distributed under MIT license
 //     http://roperzh.github.io/essential.js
 
@@ -140,7 +140,7 @@ var Proto = {
     var subProto = Object.create(this, Object.getOwnPropertyDescriptors(subProps));
     subProto.super = this;
     return subProto;
-  },
+  }
 };
 
 Function.prototype.extend = function (subProps) {
@@ -200,7 +200,7 @@ window.CustomEvent = CustomEvent;
 // ```
 
 Essential.Behavior = Proto.extend({
-  constructor: function(domElement, lateStart) {
+  constructor: function(domElement, lateStart, initParams) {
     this.el = domElement;
 
     // A behavior can be initialized without attaching events with the `lateStart`
@@ -217,17 +217,17 @@ Essential.Behavior = Proto.extend({
     // ```
 
     if(!lateStart) {
-      this.start();
+      this.start(initParams);
     }
   },
 
-  start: function() {
+  start: function(initParams) {
+    if(typeof this.init === "function") {
+      this.init(initParams);
+    }
+
     this.delegateEvents();
     this.listenChannels();
-
-    if(typeof this.init === "function") {
-      this.init();
-    }
   },
 
   // Delegate Events
