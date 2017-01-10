@@ -14,13 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/polyfills/*.js',
-      'lib/*.js',
-      'src/main.js',
-      'src/core/*.js',
-      'src/*.js',
-      'test/test_helper.js',
-      'test/*_test.js',
-      'test/fixtures/*.html'
+      'essential.js',
     ],
 
     // list of files to exclude
