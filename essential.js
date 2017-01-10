@@ -1,4 +1,4 @@
-//     EssentialJS v0.6.0
+//     EssentialJS v0.7.0
 //     Copyright (c)2014 - 2016 Roberto Dip
 //     Distributed under MIT license
 //     http://roperzh.github.io/essential.js
