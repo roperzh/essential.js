@@ -16,7 +16,7 @@ doc:
 	rm -rf docs/essential.js
 
 build:
-	cat src/main.js ${VENDOR_FILES} ${SOURCE_FILES}  > essential.js
+	cat src/main.js ${VENDOR_FILES} ${SOURCE_FILES} src/postamble.js > essential.js
 
 min:
 	./node_modules/uglify-js/bin/uglifyjs --comments "/     [a-z]/i" -m < essential.js > essential.min.js
